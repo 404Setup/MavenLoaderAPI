@@ -1,0 +1,8 @@
+rootProject.name = 'MavenLoader'
+buildscript {
+    repositories {
+        maven {
+            url = 'https://maven-central-asia.storage-download.googleapis.com/maven2/'
+        }
+    }
+}
