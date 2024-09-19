@@ -21,6 +21,8 @@ It is recommended to keep MavenLoader the latest version.
 ### Developer
 Docs in: [maven-loader-api](https://github.com/LevelTranic/MavenLoader-API)
 
+Example in: [MavenLoader-Example](https://github.com/LevelTranic/MavenLoader-Example)
+
 ## Tips
 MavenLoaderAPI and MavenLoader-API are different projects.
 
