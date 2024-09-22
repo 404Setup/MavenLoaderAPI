@@ -8,7 +8,7 @@ plugins {
 }
 
 group = 'one.tranic'
-version = '1.2-SNAPSHOT'
+version = '1.3-SNAPSHOT'
 
 repositories {
     maven {
@@ -36,7 +36,7 @@ repositories {
 dependencies {
     compileOnly("com.velocitypowered:velocity-api:3.3.0-SNAPSHOT")
     annotationProcessor("com.velocitypowered:velocity-api:3.3.0-SNAPSHOT")
-    implementation("one.tranic:maven-loader-api:1.0.1")
+    implementation("one.tranic:maven-loader-api:1.0.2")
     implementation("org.apache.maven:maven-resolver-provider:3.9.9")
     implementation("org.apache.maven.resolver:maven-resolver-connector-basic:1.9.22")
     implementation("org.apache.maven.resolver:maven-resolver-transport-http:1.9.22")

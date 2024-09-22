@@ -22,7 +22,7 @@ public class MavenLoader {
         this.logger = logger;
         this.metricsFactory = metricsFactory;
         try {
-            new Loader().scanJarFiles(dataDirectory.getParent());
+            new Loader(dataDirectory.getParent());
         } catch (Exception e) {
             e.printStackTrace();
         }
