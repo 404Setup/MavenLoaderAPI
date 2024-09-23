@@ -14,9 +14,9 @@ You need to add the following parameters to the Java startup parameters to enabl
 --add-opens=java.base/java.net=ALL-UNNAMED
 ```
 
-Then download MavenLoader and put it in the Velocity plugin directory.
+Then download MavenLoader and put it in the Velocity plugin directory. It is recommended to keep MavenLoader the latest version.
 
-It is recommended to keep MavenLoader the latest version.
+**Please confirm whether the plugin that relies on MavenLoaderAPI loads trusted dependencies and pay attention to safety.**
 
 ### Developer
 Docs in: [maven-loader-api](https://github.com/LevelTranic/MavenLoader-API)
