@@ -65,7 +65,7 @@ public class Loader {
     }
 
     @Nullable
-    private Resolver checkForMavenYml(Path jarPath) throws Exception {
+    private Resolver checkForMavenYml(@NotNull Path jarPath) throws Exception {
         try (JarFile jarFile = new JarFile(jarPath.toFile())) {
             ZipEntry mavenYmlEntry = jarFile.getEntry("maven.yml");
             if (mavenYmlEntry != null && !mavenYmlEntry.isDirectory()) {
@@ -76,7 +76,7 @@ public class Loader {
     }
 
     @Nullable
-    private Resolver parseMavenYml(JarFile jarFile, ZipEntry entry) throws Exception {
+    private Resolver parseMavenYml(@NotNull JarFile jarFile, @NotNull ZipEntry entry) throws Exception {
         try (var inputStream = jarFile.getInputStream(entry)) {
             YamlConfiguration c = YamlConfiguration.loadConfiguration(inputStream);
             List<String> dependency = c.getStringList("dependency");

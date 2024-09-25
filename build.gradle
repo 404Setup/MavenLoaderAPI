@@ -56,7 +56,6 @@ tasks.withType(JavaCompile).configureEach {
 shadowJar {
     archiveFileName = "${project.name}-${project.version}.jar"
     exclude("dev/velocitypowered")
-    exclude("org/jooq")
 }
 
 tasks.named('shadowJar', ShadowJar) {
