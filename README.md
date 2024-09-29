@@ -24,7 +24,7 @@ Docs in: [maven-loader-api](https://github.com/LevelTranic/MavenLoader-API)
 
 Example in: [MavenLoader-Example](https://github.com/LevelTranic/MavenLoader-Example)
 
-### Config
+## Config
 ```yaml
 enable_whitelist: true # Enable repository whitelist, default is true
 # repository whitelist list
