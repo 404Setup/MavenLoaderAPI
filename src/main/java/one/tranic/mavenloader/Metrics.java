@@ -1,4 +1,4 @@
-package one.tranic.mavenLoader;
+package one.tranic.mavenloader;
 
 /*
  * This Metrics class was auto-generated and can be copied into your project if you are

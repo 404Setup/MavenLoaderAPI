@@ -1,10 +1,12 @@
-package one.tranic.mavenLoader.plugins;
+package one.tranic.mavenloader.plugins;
 
+import one.tranic.mavenloader.Config;
 import one.tranic.mavenloader.api.MavenLibraryResolver;
 import one.tranic.mavenloader.boost.Boost;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.simpleyaml.configuration.file.YamlConfiguration;
+import org.slf4j.Logger;
 
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -16,8 +18,10 @@ import java.util.zip.ZipEntry;
 
 public class Loader {
     private final Resolver EMPTY_RESOLVER = new Resolver(new ArrayList<>(), new ArrayList<>());
+    private final Logger logger;
 
-    public Loader(@NotNull Path directory) throws Exception {
+    public Loader(@NotNull Path directory, @NotNull Logger logger) throws Exception {
+        this.logger = logger;
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(directory, "*.jar")) {
             ArrayList<Resolver> resolvers = new ArrayList<>();
 
@@ -83,6 +87,20 @@ public class Loader {
             if (dependency.isEmpty()) return null;
 
             List<String> repository = c.getStringList("repository");
+
+            if (Config.getEnableWhitelist() && !repository.isEmpty()) {
+                List<String> notWhiteList = new ArrayList<>();
+                for (String repo : repository) {
+                    if (!Config.isWhitelistRepo(repo)) notWhiteList.add(repo);
+                }
+                if (!notWhiteList.isEmpty()) {
+                    logger.warn("The plugin " + jarFile.getName() + " calls the Maven repository that is not in the whitelist, and it has been rejected.");
+                    logger.warn("List of the repository of the plugin " + jarFile.getName() + ":" + repository);
+                    logger.warn("The plugin "+ jarFile.getName() +" is not on the repository in the whitelist:" + notWhiteList);
+                    return null;
+                }
+            }
+
             return new Resolver(repository, dependency);
         }
     }
