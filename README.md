@@ -1,21 +1,24 @@
 # MavenLoader
 MavenLoader is used to solve the problem of lack of dependency loaders in Velocity.
 
+It is now provided as a Bukkit plugin, and will provide BungeeCord support next time.
+
 ## Required
 - Java 17+
-- Velocity 3.3.0+
+- Velocity 3.3.0+ (Optional)
+- Spigot/Paper/Folia 1.18.2-1.21.1 (Optional)
 
 ## Usage
 1.4-SNAPSHOT introduced a repository whitelist mechanism to try to avoid some untrusted repositories from loading malicious dependencies.
 
-### Velocity
+### Server
 You need to add the following parameters to the Java startup parameters to enable it normally.
 
 ```bash
 --add-opens=java.base/java.net=ALL-UNNAMED
 ```
 
-Then download MavenLoader and put it in the Velocity plugin directory. It is recommended to keep MavenLoader the latest version.
+Then download MavenLoader and put it in the Server plugin directory. It is recommended to keep MavenLoader the latest version.
 
 **Please confirm whether the plugin that relies on MavenLoaderAPI loads trusted dependencies and pay attention to safety.**
 
@@ -42,12 +45,3 @@ whitelist:
   - https://repo.repsy.io/mvn/rdb/default
 
 ```
-
-## Tips
-MavenLoaderAPI and MavenLoader-API are different projects.
-
-### MavenLoader-API
-The API for developers and its dependence should not be included in any plugin.
-
-### MavenLoaderAPI
-It is called MavenLoader in the GitHub project, and the Velocity plugin ID is `maven-loader`, which contains MavenLoader-API and its dependency items to avoid multiple plugin MavenLoader-API and dependencies cause operating problems.

@@ -1,0 +1,7 @@
+name: MavenLoader
+version: '1.5-SNAPSHOT'
+main: one.tranic.mavenloader.spigot.MavenLoader
+api-version: '1.18'
+load: STARTUP
+authors: [ 404 ]
+website: https://tranic.one

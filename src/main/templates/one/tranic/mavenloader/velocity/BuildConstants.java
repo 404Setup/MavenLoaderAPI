@@ -1,4 +1,4 @@
-package one.tranic.mavenloader;
+package one.tranic.mavenloader.velocity;
 
 // The constants are replaced before compilation
 public class BuildConstants {

@@ -44,7 +44,6 @@ public class Config {
     private static void read() {
         enableWhitelist = configuration.getBoolean("enable_whitelist");
         whitelistRepo = configuration.getStringList("whitelist");
-        System.out.println("Whitelist: " + whitelistRepo);
     }
 
     private static void save() throws IOException {

@@ -1,4 +1,4 @@
-package one.tranic.mavenloader;
+package one.tranic.mavenloader.velocity;
 
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.Subscribe;
@@ -6,6 +6,7 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
+import one.tranic.mavenloader.Config;
 import one.tranic.mavenloader.plugins.Loader;
 import org.slf4j.Logger;
 
@@ -23,8 +24,10 @@ public class MavenLoader {
         this.metricsFactory = metricsFactory;
         Config.loadConfig(dataDirectory);
         if (Config.getEnableWhitelist()) {
+            logger.warn("********    MavenLoaderAPI  WARN   ********");
             logger.warn("The Maven repository white list has been enabled, and the repository on the white list can be loaded. ");
             logger.warn("If other plugins cannot be loaded, check the repository URL in the error and confirm whether they are on the whitelist.");
+            logger.warn("*******************************************");
         }
         try {
             new Loader(dataDirectory.getParent(), logger);
