@@ -1,12 +1,21 @@
 # MavenLoader
-MavenLoader is used to solve the problem of lack of dependency loaders in Velocity.
+A custom external dependency loader is prepended to easily reduce the package size.
 
-It is now provided as a Bukkit plugin, and will provide BungeeCord support next time.
+Available as both a Velocity and Spigot plugin, with BungeeCord compatibility coming soon, allowing your plugin to quickly switch between these platforms.
 
 ## Required
 - Java 17+
 - Velocity 3.3.0+ (Optional)
 - Spigot/Paper/Folia 1.18.2-1.21.1 (Optional)
+
+## Download
+All places use the same build pack, I just left these links to let you know I'm only releasing it in these places.
+
+- **Github**: https://github.com/LevelTranic/MavenLoader/releases
+- **Spigot**: https://www.spigotmc.org/resources/mavenloaderapi.119660/
+- **CurseForge**: https://www.curseforge.com/minecraft/bukkit-plugins/mavenloaderapi
+- **Modrinth**: https://modrinth.com/plugin/mavenloader-api
+- **Hangar**: https://hangar.papermc.io/Tranic/MavenLoaderAPI
 
 ## Usage
 1.4-SNAPSHOT introduced a repository whitelist mechanism to try to avoid some untrusted repositories from loading malicious dependencies.
