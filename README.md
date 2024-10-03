@@ -35,7 +35,7 @@ Docs in: [DEVELOPER_DOCS](DEVELOPER_DOCS.md)
 
 Example in: [MavenLoader-Example](https://github.com/LevelTranic/MavenLoader-Example)
 
-### Compatibility
+## Compatibility
 - 1.2-SNAPSHOT: Implementing `maven.yml`
 - 1.4-SNAPSHOT: Implementing repository whitelisting
 - 1.5-SNAPSHOT: Support Bukkit
