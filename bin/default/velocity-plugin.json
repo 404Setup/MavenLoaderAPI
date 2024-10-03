@@ -1,1 +1,0 @@
-{"id":"maven-loader","name":"MavenLoader","version":"1.5-SNAPSHOT","url":"https://tranic.one","authors":["404"],"dependencies":[],"main":"one.tranic.mavenloader.velocity.MavenLoader"}
