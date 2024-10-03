@@ -35,6 +35,12 @@ Docs in: [DEVELOPER_DOCS](DEVELOPER_DOCS.md)
 
 Example in: [MavenLoader-Example](https://github.com/LevelTranic/MavenLoader-Example)
 
+### Compatibility
+- 1.2-SNAPSHOT: Implementing `maven.yml`
+- 1.4-SNAPSHOT: Implementing repository whitelisting
+- 1.5-SNAPSHOT: Support Bukkit
+- 1.6-SNAPSHOT (Coming soon): Support BungeeCord, PlugmanX, ServerUtils
+
 ## Config
 ```yaml
 enable_whitelist: true # Enable repository whitelist, default is true
