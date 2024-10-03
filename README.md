@@ -31,7 +31,7 @@ Then download MavenLoader and put it in the Server plugin directory. It is recom
 **Please confirm whether the plugin that relies on MavenLoaderAPI loads trusted dependencies and pay attention to safety.**
 
 ### Developer
-Docs in: [maven-loader-api](https://github.com/LevelTranic/MavenLoader-API)
+Docs in: [maven-loader-api](DEVELOPER_DOCS.md)
 
 Example in: [MavenLoader-Example](https://github.com/LevelTranic/MavenLoader-Example)
 
