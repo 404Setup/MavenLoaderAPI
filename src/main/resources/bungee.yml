@@ -1,0 +1,4 @@
+name: MavenLoader
+version: '${version}'
+main: one.tranic.mavenloader.bungee.MavenLoader
+author: 404

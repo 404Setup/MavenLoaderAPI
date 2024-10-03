@@ -1,8 +1,6 @@
-package one.tranic.mavenloader.plugins;
+package one.tranic.mavenloader.loader;
 
 import one.tranic.mavenloader.Config;
-import one.tranic.mavenloader.api.MavenLibraryResolver;
-import one.tranic.mavenloader.boost.Boost;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.simpleyaml.configuration.file.YamlConfiguration;
@@ -35,7 +33,7 @@ public class Loader {
             Resolver resolver = clearResolver(resolvers);
             if (resolver == EMPTY_RESOLVER || resolver.dependency.isEmpty()) return;
 
-            MavenLibraryResolver r = new MavenLibraryResolver();
+            LibraryResolver r = new LibraryResolver();
 
             int i = 0;
             for (String repo : resolver.repository) {
@@ -45,6 +43,21 @@ public class Loader {
             for (String dep : resolver.dependency) {
                 r.addDependency(dep);
             }
+        }
+    }
+
+    public static void MainLoader(@NotNull Path directory, @NotNull Logger logger) {
+        Config.loadConfig(directory);
+        if (Config.getEnableWhitelist()) {
+            logger.warn("********    MavenLoaderAPI  WARN   ********");
+            logger.warn("The Maven repository white list has been enabled, and the repository on the white list can be loaded. ");
+            logger.warn("If other plugins cannot be loaded, check the repository URL in the error and confirm whether they are on the whitelist.");
+            logger.warn("*******************************************");
+        }
+        try {
+            new Loader(directory.getParent(), logger);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -96,7 +109,7 @@ public class Loader {
                 if (!notWhiteList.isEmpty()) {
                     logger.warn("The plugin " + jarFile.getName() + " calls the Maven repository that is not in the whitelist, and it has been rejected.");
                     logger.warn("List of the repository of the plugin " + jarFile.getName() + ":" + repository);
-                    logger.warn("The plugin "+ jarFile.getName() +" is not on the repository in the whitelist:" + notWhiteList);
+                    logger.warn("The plugin " + jarFile.getName() + " is not on the repository in the whitelist:" + notWhiteList);
                     return null;
                 }
             }

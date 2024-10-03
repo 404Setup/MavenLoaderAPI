@@ -1,12 +1,11 @@
 # MavenLoader
 A custom external dependency loader is prepended to easily reduce the package size.
 
-Available as both a Velocity and Spigot plugin, with BungeeCord compatibility coming soon, allowing your plugin to quickly switch between these platforms.
-
 ## Required
 - Java 17+
-- Velocity 3.3.0+ (Optional)
-- Spigot/Paper/Folia 1.18.2-1.21.1 (Optional)
+- Velocity 3.3.0 <-> latest (Optional)
+- BungeeCord 1.18 <-> latest (Optional)
+- Spigot/Paper/Folia 1.18.2 <-> latest (Optional)
 
 ## Download
 All places use the same build pack, I just left these links to let you know I'm only releasing it in these places.

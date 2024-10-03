@@ -1,11 +1,11 @@
-package one.tranic.mavenloader.spigot;
+package one.tranic.mavenloader.bungee;
 
+import net.md_5.bungee.api.plugin.Plugin;
 import one.tranic.mavenloader.loader.Loader;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class MavenLoader extends JavaPlugin {
+public final class MavenLoader extends Plugin {
     private final Logger logger = LoggerFactory.getLogger("MavenLoaderAPI");
     private Metrics metrics;
 
@@ -16,13 +16,13 @@ public final class MavenLoader extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        logger.info("Initializing MavenLoaderAPI (Spigot)");
-        metrics = new Metrics(this, 23501);
+        logger.info("Initializing MavenLoaderAPI (BungeeCord)");
+        metrics = new Metrics(this, 23524);
     }
 
     @Override
     public void onDisable() {
-        logger.info("Shutting down MavenLoaderAPI (Spigot)");
+        logger.info("Shutting down MavenLoaderAPI (BungeeCord)");
         if (metrics != null) {
             metrics.shutdown();
         }
