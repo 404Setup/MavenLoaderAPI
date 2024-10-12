@@ -85,7 +85,9 @@ repository:
 dependency:
   - org.jooq:jooq:3.17.7
   - com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.4
-platform: # 
+  # Simple-YAML should not be added, as MavenLoaderAPI already includes that dependency since 1.2-SNAPSHOT.
+platform: # Supported keywords: spigot, paper, folia, shreddedpaper, bungeecord, velocity. 
+  # Other forks will be processed according to their upstreams.
   spigot:
     - org.mongodb:mongodb-driver-sync:5.2.0
   paper:
@@ -98,7 +100,6 @@ platform: #
     - other depend4
   velocity:
     - other depend5
-  # Simple-YAML should not be added, as MavenLoaderAPI already includes that dependency since 1.2-SNAPSHOT.
 ```
 
 Just like this.
