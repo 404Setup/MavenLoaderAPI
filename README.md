@@ -7,6 +7,10 @@ A custom external dependency loader is prepended to easily reduce the package si
 - BungeeCord 1.18 <-> latest (Optional)
 - Spigot/Paper/Folia 1.18.2 <-> latest (Optional)
 
+## Plugin Compatibility
+- PlugManX 2.4.2
+- ServerUtils
+
 ## Download
 All places use the same build pack, I just left these links to let you know I'm only releasing it in these places.
 

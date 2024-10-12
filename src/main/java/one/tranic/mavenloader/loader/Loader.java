@@ -1,6 +1,7 @@
 package one.tranic.mavenloader.loader;
 
 import one.tranic.mavenloader.Config;
+import one.tranic.mavenloader.Platform;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.simpleyaml.configuration.file.YamlConfiguration;
@@ -96,8 +97,13 @@ public class Loader {
     private Resolver parseMavenYml(@NotNull JarFile jarFile, @NotNull ZipEntry entry) throws Exception {
         try (var inputStream = jarFile.getInputStream(entry)) {
             YamlConfiguration c = YamlConfiguration.loadConfiguration(inputStream);
-            List<String> dependency = c.getStringList("dependency");
-            if (dependency.isEmpty()) return null;
+            List<String> pList = c.getStringList("platform." + Platform.get()); // Loading dependencies independently on some platforms
+
+            List<String> dependency = c.getStringList("dependency"); // Dependencies that will be installed on all platforms
+            if (dependency.isEmpty()) {
+                if (pList.isEmpty()) return null;
+                dependency.addAll(pList);
+            }
 
             List<String> repository = c.getStringList("repository");
 
