@@ -6,8 +6,6 @@ import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.platform.bungeecord.BungeeAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.plugin.Plugin;
 import one.tranic.mavenloader.Platform;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,7 +17,7 @@ public class MessageSender {
         if (adventure == null) {
             adventure = switch (Platform.get()) {
                 case Velocity, Paper, ShreddedPaper, Folia -> null;
-                case BungeeCord -> BungeeAudiences.create((Plugin) plugin);
+                case BungeeCord -> BungeeAudiences.create((net.md_5.bungee.api.plugin.Plugin) plugin);
                 case Spigot -> BukkitAudiences.create((org.bukkit.plugin.Plugin) plugin);
             };
         }
@@ -49,7 +47,7 @@ public class MessageSender {
 
     public static void sendMessage(Component message, Object sender) {
         switch (Platform.get()) {
-            case BungeeCord -> MessageSender.bungeeAdventure().sender((CommandSender) sender)
+            case BungeeCord -> MessageSender.bungeeAdventure().sender((net.md_5.bungee.api.CommandSender) sender)
                     .sendMessage(message);
             case Spigot ->
                     MessageSender.bukkitAdventure().sender((org.bukkit.command.CommandSender) sender).sendMessage(message);

@@ -1,56 +1,38 @@
-package one.tranic.mavenloader.spigot;
+package one.tranic.mavenloader.bungee;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.ProxyServer;
 import one.tranic.mavenloader.Config;
 import one.tranic.mavenloader.common.MessageSender;
-import one.tranic.mavenloader.common.loader.Loader;
 import one.tranic.mavenloader.common.update.UpdateRecord;
 import one.tranic.mavenloader.common.update.Updater;
 import one.tranic.mavenloader.common.update.github.GithubUpdate;
 import one.tranic.mavenloader.velocity.BuildConstants;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Objects;
 
-public final class MavenLoader extends JavaPlugin {
+public class UpdateUtils {
     private static Updater updater;
-    private final Logger logger = LoggerFactory.getLogger("MavenLoaderAPI");
-    private Metrics metrics;
+    private static String version;
 
-    @Override
-    public void onEnable() {
-        Loader.MainLoader(getDataFolder().toPath(), logger);
-        logger.info("Initializing MavenLoaderAPI (Spigot)");
-        metrics = new Metrics(this, 23501);
-        MessageSender.setPlugin(this);
-        checkUpdate();
+    public static void setVersion(String version) {
+        UpdateUtils.version = version;
     }
 
-    @Override
-    public void onDisable() {
-        logger.info("Shutting down MavenLoaderAPI (Spigot)");
-        if (metrics != null) {
-            metrics.shutdown();
-        }
-        MessageSender.close();
-    }
-
-    private void checkUpdate() {
+    public static void checkUpdate(ProxyServer server) {
         if (!Config.isUpdaterCheck()) return;
         if (Objects.equals(Config.getUpdaterSource(), "github")) {
-            updater = new GithubUpdate(getDescription().getVersion());
+            updater = new GithubUpdate(BuildConstants.VERSION);
         }
         if (updater == null) return;
         try {
             UpdateRecord result = updater.getUpdate();
             if (result != null) {
                 if (result.hasUpdate()) {
-                    ConsoleCommandSender source = getServer().getConsoleSender();
+                    CommandSender source = server.getConsole();
                     MessageSender.sendMessage(Component.text("We found a MavenLoaderAPI update!", NamedTextColor.BLUE), source);
                     MessageSender.sendMessage(Component.text("This machine Mavenloader version ", NamedTextColor.YELLOW)
                                     .append(Component.text(BuildConstants.VERSION, NamedTextColor.AQUA))
@@ -63,7 +45,7 @@ public final class MavenLoader extends JavaPlugin {
                     MessageSender.sendMessage(Component.text("Download and update here: ", NamedTextColor.YELLOW)
                             .append(Component.text(result.updateUrl(), NamedTextColor.AQUA)), source);
                 } else {
-                    MessageSender.sendMessage(Component.text("MavenloaderAPI is already the latest version!", NamedTextColor.GREEN), getServer().getConsoleSender());
+                    MessageSender.sendMessage(Component.text("MavenloaderAPI is already the latest version!", NamedTextColor.GREEN), server.getConsole());
                 }
             }
         } catch (IOException e) {

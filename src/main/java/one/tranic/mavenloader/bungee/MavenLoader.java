@@ -10,6 +10,7 @@ public final class MavenLoader extends Plugin {
     private final Logger logger = LoggerFactory.getLogger("MavenLoaderAPI");
     private Metrics metrics;
 
+
     public MavenLoader() {
         super();
         Loader.MainLoader(getDataFolder().toPath(), logger);
@@ -20,6 +21,8 @@ public final class MavenLoader extends Plugin {
         logger.info("Initializing MavenLoaderAPI (BungeeCord)");
         metrics = new Metrics(this, 23524);
         MessageSender.setPlugin(this);
+        UpdateUtils.setVersion(getDescription().getVersion());
+        UpdateUtils.checkUpdate(getProxy());
     }
 
     @Override
