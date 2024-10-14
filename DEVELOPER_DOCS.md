@@ -69,8 +69,6 @@ Support for loading dependencies for specific platforms has been added since `1.
 
 `dependency` in dependency will be loaded everywhere, while dependencies in platform will only be loaded on specific platforms.
 
-like this: 
-
 ```yaml
 # If this option is enabled, MavenLoader will try to load dependencies into the plugin's class instead of the MavenLoader class. 
 # This can solve some problems due to class loader conflicts, such as MiniMessage in Spigot.
