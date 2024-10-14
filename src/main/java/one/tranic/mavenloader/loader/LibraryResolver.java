@@ -1,7 +1,6 @@
 package one.tranic.mavenloader.loader;
 
 import one.tranic.mavenloader.Config;
-import one.tranic.mavenloader.boost.Boost;
 import org.apache.maven.repository.internal.MavenRepositorySystemUtils;
 import org.eclipse.aether.DefaultRepositorySystemSession;
 import org.eclipse.aether.RepositorySystem;
@@ -145,12 +144,50 @@ public class LibraryResolver {
     /**
      * Adds a Maven dependency to be resolved and downloaded.
      *
+     * @param dependency the Maven dependency to resolve, not be {@code null}.
+     * @param clazz the target plugin class, not be {@code null}.
+     * @throws Exception if the dependency resolution fails
+     */
+    public void addDependency(@NotNull Dependency dependency, @NotNull Class<?> clazz) throws Exception {
+        CollectRequest collectRequest = new CollectRequest();
+        collectRequest.setRepositories(repositories);
+        collectRequest.addDependency(dependency);
+
+        DependencyRequest dependencyRequest = new DependencyRequest(collectRequest, null);
+        DependencyResult dependencyResult = system.resolveDependencies(session, dependencyRequest);
+
+        List<ArtifactResult> results = dependencyResult.getArtifactResults();
+        if (results.isEmpty()) return;
+        // Load each downloaded artifact (including dependencies)
+        for (ArtifactResult artifactResult : results) {
+            File jarFile = artifactResult.getArtifact().getFile();
+            if (jarFile != null && jarFile.exists()) {
+                loadJar(jarFile, clazz);
+            }
+        }
+    }
+
+    /**
+     * Adds a Maven dependency to be resolved and downloaded.
+     *
      * @param dep the Maven dependency to resolve, not be {@code null}.
      * @throws Exception if the dependency resolution fails
      */
     public void addDependency(@NotNull String dep) throws Exception {
         Dependency dependency = new Dependency(new DefaultArtifact(dep), null);
         addDependency(dependency);
+    }
+
+    /**
+     * Adds a Maven dependency to be resolved and downloaded.
+     *
+     * @param dep the Maven dependency to resolve, not be {@code null}.
+     * @param clazz the target plugin class, not be {@code null}.
+     * @throws Exception if the dependency resolution fails
+     */
+    public void addDependency(@NotNull String dep, @NotNull Class<?> clazz) throws Exception {
+        Dependency dependency = new Dependency(new DefaultArtifact(dep), null);
+        addDependency(dependency, clazz);
     }
 
     /**
@@ -172,18 +209,29 @@ public class LibraryResolver {
      * @throws Exception if any error occurs during loading
      */
     private void loadJar(File jarFile) throws Exception {
+        loadJar(jarFile, this.getClass());
+    }
+
+    /**
+     * Dynamically load the specified jar file to the context of the current thread of the plugin.
+     *
+     * @param jarFile the JAR file to load
+     * @param plugin  Plugin class
+     * @throws Exception if any error occurs during loading
+     */
+    private void loadJar(File jarFile, Class<?> plugin) throws Exception {
         if (!jarFile.exists()) throw new FileNotFoundException();
         if (!enabled) return;
         URL jarUrl = jarFile.toURI().toURL();
 
-        ClassLoader pluginClassLoader = this.getClass().getClassLoader();
+        ClassLoader pluginClassLoader = plugin.getClassLoader();
 
         Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
         method.setAccessible(true);
 
         if (pluginClassLoader instanceof URLClassLoader) {
             method.invoke(pluginClassLoader, jarUrl);
-            logger.info("Loaded JAR into plugin classloader: " + jarFile.getAbsolutePath());
+            logger.info("Loaded JAR into plugin " + plugin.getName() + ":" + jarFile.getAbsolutePath());
         } else {
             logger.error("ClassLoader is not an instance of URLClassLoader");
         }

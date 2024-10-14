@@ -63,33 +63,27 @@ depend:
 ### Setting dependencies
 MavenLoader `1.2-SNAPSHOT` introduced a new loading mechanism.
 
-You only need to create a `maven.yml` in `src/main/resources`,
-like this
-
-```yaml
-repository:
-  - https://jitpack.io
-dependency:
-  - org.jooq:jooq:3.17.7
-  - com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.4
-  # Simple-YAML should not be added, as MavenLoaderAPI already includes that dependency since 1.2-SNAPSHOT.
-```
+You only need to create a `maven.yml` in `src/main/resources`
 
 Support for loading dependencies for specific platforms has been added since `1.6-SNAPSHOT`.
 
 `dependency` in dependency will be loaded everywhere, while dependencies in platform will only be loaded on specific platforms.
 
+like this: 
+
 ```yaml
+# If this option is enabled, MavenLoader will try to load dependencies into the plugin's class instead of the MavenLoader class. 
+# This can solve some problems due to class loader conflicts, such as MiniMessage in Spigot.
+reference-load: true
 repository:
   - https://jitpack.io
 dependency:
-  - org.jooq:jooq:3.17.7
-  - com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.4
+  - net.kyori:adventure-text-minimessage:4.17.0
   # Simple-YAML should not be added, as MavenLoaderAPI already includes that dependency since 1.2-SNAPSHOT.
 platform: # Supported keywords: spigot, paper, folia, shreddedpaper, bungeecord, velocity. 
   # Other forks will be processed according to their upstreams.
   spigot:
-    - org.mongodb:mongodb-driver-sync:5.2.0
+    - net.kyori:adventure-platform-bukkit:4.3.4
   paper:
     - other depend
   folia:
@@ -97,7 +91,7 @@ platform: # Supported keywords: spigot, paper, folia, shreddedpaper, bungeecord,
   shreddedpaper:
     - other depend3
   bungeecord:
-    - other depend4
+    - net.kyori:adventure-platform-bungeecord:4.3.4
   velocity:
     - other depend5
 ```

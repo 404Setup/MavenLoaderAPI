@@ -9,13 +9,9 @@ public final class MavenLoader extends JavaPlugin {
     private final Logger logger = LoggerFactory.getLogger("MavenLoaderAPI");
     private Metrics metrics;
 
-    public MavenLoader() {
-        super();
-        Loader.MainLoader(getDataFolder().toPath(), logger);
-    }
-
     @Override
     public void onEnable() {
+        Loader.MainLoader(getDataFolder().toPath(), logger);
         logger.info("Initializing MavenLoaderAPI (Spigot)");
         metrics = new Metrics(this, 23501);
     }
