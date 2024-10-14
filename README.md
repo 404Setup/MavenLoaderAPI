@@ -42,7 +42,7 @@ Example in: [MavenLoader-Example](https://github.com/LevelTranic/MavenLoader-Exa
 - 1.2-SNAPSHOT: Implementing `maven.yml`
 - 1.4-SNAPSHOT: Implementing repository whitelisting
 - 1.5-SNAPSHOT: Support Bukkit
-- 1.6-SNAPSHOT (Coming soon): Support BungeeCord, PlugmanX. `maven.yml` support platform keyword. Remove external API (now only allow maven.yml)
+- 1.6-SNAPSHOT (Coming soon): Support BungeeCord, PlugmanX. `maven.yml` support `platform`, `reference-load` keyword. Remove external API (now only allow maven.yml)
 
 ## Config
 ```yaml
