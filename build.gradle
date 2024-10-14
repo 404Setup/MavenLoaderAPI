@@ -47,6 +47,7 @@ dependencies {
     implementation("org.apache.maven.resolver:maven-resolver-connector-basic:1.9.22")
     implementation("org.apache.maven.resolver:maven-resolver-transport-http:1.9.22")
     compileOnly("com.google.code.gson:gson:2.11.0")
+    compileOnly("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.4")
 }
 

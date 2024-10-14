@@ -167,27 +167,32 @@ public class Loader {
     private Class<?> getYmlClass(@NotNull JarFile file, @NotNull String name) {
         ZipEntry entry = file.getEntry(name);
         if (entry != null && !entry.isDirectory()) {
-            try (var inputStream = file.getInputStream(entry)) {
-                YamlConfiguration c = YamlConfiguration.loadConfiguration(inputStream);
-                try {
-                    return Class.forName(c.getString("main"));
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            } catch (IOException e) {
+            return getYmlClass(file, entry);
+        }
+        return null;
+    }
+
+    @Nullable
+    private Class<?> getYmlClass(@NotNull JarFile file, @NotNull ZipEntry entry) {
+        try (var inputStream = file.getInputStream(entry)) {
+            YamlConfiguration c = YamlConfiguration.loadConfiguration(inputStream);
+            try {
+                return Class.forName(c.getString("main"));
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
                 return null;
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
     @Nullable
     private Class<?> getPaperClass(@NotNull JarFile file) {
         ZipEntry entry = file.getEntry("paper-plugin.yml");
         if (entry != null && !entry.isDirectory()) {
-            return getYmlClass(file, "paper-plugin.yml");
+            return getYmlClass(file, entry);
         }
         return null;
     }
@@ -202,6 +207,7 @@ public class Loader {
         return getYmlClass(file, "bungee.yml");
     }
 
-    private record Resolver(List<String> repository, List<String> dependency, boolean isReferenceLoad, Class<?> pluginClass) {
+    private record Resolver(List<String> repository, List<String> dependency, boolean isReferenceLoad,
+                            Class<?> pluginClass) {
     }
 }
