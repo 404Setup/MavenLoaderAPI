@@ -1,6 +1,18 @@
 # MavenLoader
 A custom external dependency loader is prepared to easily reduce the package size.
 
+<div align=center>
+<img src="https://badges.moddingx.org/modrinth/downloads/mavenloader-api" alt="">
+<img src="https://badges.moddingx.org/modrinth/versions/mavenloader-api" alt="">
+<img src="https://badges.moddingx.org/curseforge/downloads/1104872" alt="">
+<img src="https://badges.moddingx.org/curseforge/versions/1104872" alt="">
+<img src="https://pluginbadges.glitch.me/api/v1/dl/MavenLoaderAPI+Spigot-limegreen.svg?spigot=mavenloaderapi.119660&bukkit=mavenloaderapi&github=LevelTranic/MavenLoader&style=for-the-badge" alt="">
+<img src="https://img.shields.io/github/commit-activity/w/LevelTranic/MavenLoader?style=flat-square" alt="">
+<img src="https://img.shields.io/github/downloads/LevelTranic/MavenLoader/total?style=flat-square" alt="">
+<img src="https://img.shields.io/github/release-date/LevelTranic/MavenLoader?style=flat-square" alt="">
+<img src="https://img.shields.io/github/v/release/LevelTranic/MavenLoader?style=flat-square" alt="">
+</div>
+
 ## Required
 - Java 17+
 - Velocity 3.3.0 ↔ latest (Optional)
@@ -40,7 +52,7 @@ Example in: [MavenLoader-Example](https://github.com/LevelTranic/MavenLoader-Exa
 
 ## Compatibility
 - 1.2-SNAPSHOT: Implementing `maven.yml`
-- 1.4-SNAPSHOT: Implementing repository whitelisting
+- 1.4-SNAPSHOT: Implementing repository whitelist
 - 1.5-SNAPSHOT: Support Bukkit
 - 1.6-SNAPSHOT (Coming soon): Support BungeeCord, PlugmanX. `maven.yml` support `platform`, `reference-load` keyword. Remove external API (now only allow maven.yml)
 
@@ -62,3 +74,8 @@ whitelist:
   - https://repo.repsy.io/mvn/rdb/default
 
 ```
+
+## Statistics
+- Velocity: https://bstats.org/plugin/velocity/MavenLoader/23396
+- Spigot: https://bstats.org/plugin/bukkit/MavenLoader-Spigot/23501
+- Bungee: https://bstats.org/plugin/bungeecord/MavenLoader-Bungee/23524
