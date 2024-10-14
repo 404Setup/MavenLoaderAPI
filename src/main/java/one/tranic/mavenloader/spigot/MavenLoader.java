@@ -1,5 +1,6 @@
 package one.tranic.mavenloader.spigot;
 
+import one.tranic.mavenloader.common.MessageSender;
 import one.tranic.mavenloader.common.loader.Loader;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ public final class MavenLoader extends JavaPlugin {
         Loader.MainLoader(getDataFolder().toPath(), logger);
         logger.info("Initializing MavenLoaderAPI (Spigot)");
         metrics = new Metrics(this, 23501);
+        MessageSender.setPlugin(this);
     }
 
     @Override
@@ -22,5 +24,6 @@ public final class MavenLoader extends JavaPlugin {
         if (metrics != null) {
             metrics.shutdown();
         }
+        MessageSender.close();
     }
 }
