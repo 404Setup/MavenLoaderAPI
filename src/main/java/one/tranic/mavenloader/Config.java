@@ -14,15 +14,9 @@ public class Config {
 
     private static List<String> whitelistRepo;
     private static boolean enableWhitelist = true;
+    private static boolean updaterCheck = true;
+    private static String updaterSource = "github";
 
-    public static boolean getEnableWhitelist() {
-        return enableWhitelist;
-    }
-
-    public static boolean isWhitelistRepo(String repo) {
-        if (!enableWhitelist || whitelistRepo == null || whitelistRepo.isEmpty()) return true;
-        return whitelistRepo.contains(repo);
-    }
 
     public static void loadConfig(Path dataDirectory) {
         configFile = dataDirectory.getParent().resolve("MavenLoader").resolve("config.yml").toFile();
@@ -44,6 +38,9 @@ public class Config {
     private static void read() {
         enableWhitelist = configuration.getBoolean("enable_whitelist");
         whitelistRepo = configuration.getStringList("whitelist");
+
+        updaterCheck = configuration.getBoolean("updater.check");
+        updaterSource = configuration.getString("updater.source");
     }
 
     private static void save() throws IOException {
@@ -65,7 +62,27 @@ public class Config {
         );
         configuration.addDefault("whitelist", list);
 
+        configuration.addDefault("updater.check", true);
+        configuration.addDefault("updater.source", "github");
+
         configuration.options().copyDefaults(true);
         configuration.save(configFile);
+    }
+
+    public static boolean getEnableWhitelist() {
+        return enableWhitelist;
+    }
+
+    public static boolean isWhitelistRepo(String repo) {
+        if (!enableWhitelist || whitelistRepo == null || whitelistRepo.isEmpty()) return true;
+        return whitelistRepo.contains(repo);
+    }
+
+    public static boolean isUpdaterCheck() {
+        return updaterCheck;
+    }
+
+    public static String getUpdaterSource() {
+        return updaterSource;
     }
 }
