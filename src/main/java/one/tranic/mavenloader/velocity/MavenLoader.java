@@ -11,10 +11,10 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import one.tranic.mavenloader.Config;
-import one.tranic.mavenloader.loader.Loader;
-import one.tranic.mavenloader.update.UpdateRecord;
-import one.tranic.mavenloader.update.Updater;
-import one.tranic.mavenloader.update.github.GithubUpdate;
+import one.tranic.mavenloader.common.loader.Loader;
+import one.tranic.mavenloader.common.update.UpdateRecord;
+import one.tranic.mavenloader.common.update.Updater;
+import one.tranic.mavenloader.common.update.github.GithubUpdate;
 import org.slf4j.Logger;
 
 import java.io.IOException;

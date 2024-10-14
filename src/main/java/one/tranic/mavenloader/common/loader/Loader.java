@@ -1,4 +1,4 @@
-package one.tranic.mavenloader.loader;
+package one.tranic.mavenloader.common.loader;
 
 import com.google.gson.Gson;
 import one.tranic.mavenloader.Config;

@@ -1,4 +1,4 @@
-package one.tranic.mavenloader.loader;
+package one.tranic.mavenloader.common.loader;
 
 import org.eclipse.aether.repository.RemoteRepository;
 import org.slf4j.Logger;

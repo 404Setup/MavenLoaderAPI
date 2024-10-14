@@ -1,4 +1,4 @@
-package one.tranic.mavenloader.loader;
+package one.tranic.mavenloader.common.loader;
 
 import one.tranic.mavenloader.Config;
 import org.apache.maven.repository.internal.MavenRepositorySystemUtils;

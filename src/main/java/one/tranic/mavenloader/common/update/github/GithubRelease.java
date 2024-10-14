@@ -1,4 +1,4 @@
-package one.tranic.mavenloader.update.github;
+package one.tranic.mavenloader.common.update.github;
 
 import com.google.gson.annotations.SerializedName;
 

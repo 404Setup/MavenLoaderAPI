@@ -1,6 +1,6 @@
 package one.tranic.mavenloader.spigot;
 
-import one.tranic.mavenloader.loader.Loader;
+import one.tranic.mavenloader.common.loader.Loader;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

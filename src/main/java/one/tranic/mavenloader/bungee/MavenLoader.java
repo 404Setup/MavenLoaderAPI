@@ -1,7 +1,7 @@
 package one.tranic.mavenloader.bungee;
 
 import net.md_5.bungee.api.plugin.Plugin;
-import one.tranic.mavenloader.loader.Loader;
+import one.tranic.mavenloader.common.loader.Loader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

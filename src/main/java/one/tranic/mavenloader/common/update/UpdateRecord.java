@@ -1,4 +1,4 @@
-package one.tranic.mavenloader.update;
+package one.tranic.mavenloader.common.update;
 
 public record UpdateRecord(boolean hasUpdate, String newVersion, String updateInfo, String updateUrl) {
 }
