@@ -9,6 +9,7 @@ import one.tranic.mavenloader.common.update.UpdateRecord;
 import one.tranic.mavenloader.common.update.UpdateSource;
 import one.tranic.mavenloader.common.update.Updater;
 import one.tranic.mavenloader.common.update.github.GithubUpdate;
+import one.tranic.mavenloader.common.update.spiget.SpigetUpdate;
 import one.tranic.mavenloader.common.update.spigot.SpigotUpdate;
 import one.tranic.mavenloader.velocity.BuildConstants;
 import org.bukkit.command.ConsoleCommandSender;
@@ -45,7 +46,8 @@ public final class MavenLoader extends JavaPlugin {
         if (!Config.isUpdaterCheck()) return;
         updater = switch (UpdateSource.of(Config.getUpdaterSource())) {
             case Github -> new GithubUpdate(getDescription().getVersion(), "LevelTranic/MavenLoader");
-            case Spigot -> new SpigotUpdate(getDescription().getVersion(), "119660");
+            case Spigot -> new SpigotUpdate(getDescription().getVersion(), 119660);
+            case Spiget -> new SpigetUpdate(getDescription().getVersion(), 119660);
             default -> throw new RuntimeException("This update channel: "+Config.getUpdaterSource()+" is not supported");
         };
         try {

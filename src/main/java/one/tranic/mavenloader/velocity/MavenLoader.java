@@ -16,6 +16,7 @@ import one.tranic.mavenloader.common.update.UpdateRecord;
 import one.tranic.mavenloader.common.update.UpdateSource;
 import one.tranic.mavenloader.common.update.Updater;
 import one.tranic.mavenloader.common.update.github.GithubUpdate;
+import one.tranic.mavenloader.common.update.spiget.SpigetUpdate;
 import one.tranic.mavenloader.common.update.spigot.SpigotUpdate;
 import org.slf4j.Logger;
 
@@ -60,7 +61,8 @@ public class MavenLoader {
         if (!Config.isUpdaterCheck()) return;
         updater = switch (UpdateSource.of(Config.getUpdaterSource())) {
             case Github -> new GithubUpdate(BuildConstants.VERSION, "LevelTranic/MavenLoader");
-            case Spigot -> new SpigotUpdate(BuildConstants.VERSION, "119660");
+            case Spigot -> new SpigotUpdate(BuildConstants.VERSION, 119660);
+            case Spiget -> new SpigetUpdate(BuildConstants.VERSION, 119660);
             default -> throw new RuntimeException("This update channel: "+Config.getUpdaterSource()+" is not supported");
         };
         try {

@@ -1,10 +1,10 @@
-package one.tranic.mavenloader.common.update.github;
+package one.tranic.mavenloader.common.update.github.source;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class GithubRelease {
+public class GithubLatestReleaseSource {
     private String url;
     @SerializedName("assets_url")
     private String assetsUrl;
@@ -34,7 +34,8 @@ public class GithubRelease {
     private String zipballUrl;
     private String body;
 
-    public GithubRelease() {}
+    public GithubLatestReleaseSource() {
+    }
 
     // Getters
     public String getUrl() {
@@ -144,7 +145,8 @@ public class GithubRelease {
         @SerializedName("site_admin")
         private boolean siteAdmin;
 
-        public Author() {}
+        public Author() {
+        }
 
         // Getters
         public String getLogin() {
@@ -241,7 +243,8 @@ public class GithubRelease {
         @SerializedName("browser_download_url")
         private String browserDownloadUrl;
 
-        public Asset() {}
+        public Asset() {
+        }
 
         // Getters
         public String getUrl() {
@@ -330,7 +333,8 @@ public class GithubRelease {
             @SerializedName("site_admin")
             private boolean siteAdmin;
 
-            public Uploader() {}
+            public Uploader() {
+            }
 
             // Getters
             public String getLogin() {

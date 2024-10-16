@@ -11,19 +11,19 @@ import java.util.Objects;
 
 public class SpigotUpdate implements Updater {
     private final String localVersion;
-    private final String resourceID;
+    private final int resourceId;
     private final OkHttpClient client = new OkHttpClient();
 
-    public SpigotUpdate(String localVersion, String resourceID) {
+    public SpigotUpdate(String localVersion, int resourceId) {
         this.localVersion = localVersion;
-        this.resourceID = resourceID;
+        this.resourceId = resourceId;
     }
 
     @Override
     public UpdateRecord getUpdate() throws IOException {
         Request request = new Request.Builder()
                 .get()
-                .url("https://api.spigotmc.org/legacy/update.php?resource=" + resourceID)
+                .url("https://api.spigotmc.org/legacy/update.php?resource=" + resourceId)
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
@@ -37,7 +37,7 @@ public class SpigotUpdate implements Updater {
             }
 
             if (!Objects.equals(localVersion, body)) {
-                return new UpdateRecord(true, body, "Update info is empty", "https://www.spigotmc.org/resources/" + resourceID + "/");
+                return new UpdateRecord(true, body, "Update info is empty", "https://www.spigotmc.org/resources/" + resourceId + "/");
             }
         }
 

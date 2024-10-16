@@ -6,18 +6,19 @@ import okhttp3.Request;
 import okhttp3.Response;
 import one.tranic.mavenloader.common.update.UpdateRecord;
 import one.tranic.mavenloader.common.update.Updater;
+import one.tranic.mavenloader.common.update.github.source.GithubLatestReleaseSource;
 
 import java.io.IOException;
 import java.util.Objects;
 
 public class GithubUpdate implements Updater {
-    private final String myVersion;
+    private final String localVersion;
     private final String repo;
     private final OkHttpClient client = new OkHttpClient();
     private final Gson gson = new Gson();
 
-    public GithubUpdate(String myVersion, String repo) {
-        this.myVersion = myVersion;
+    public GithubUpdate(String localVersion, String repo) {
+        this.localVersion = localVersion;
         this.repo = repo;
     }
 
@@ -31,11 +32,10 @@ public class GithubUpdate implements Updater {
 
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-
             if (response.body() == null) return empty;
 
-            GithubRelease updater = gson.fromJson(response.body().string(), GithubRelease.class);
-            if (!Objects.equals(myVersion, updater.getTagName())) {
+            GithubLatestReleaseSource updater = gson.fromJson(response.body().string(), GithubLatestReleaseSource.class);
+            if (!Objects.equals(localVersion, updater.getTagName())) {
                 return new UpdateRecord(true, updater.getTagName(), updater.getBody().replaceAll("\\s*\\*\\*Full Changelog\\*\\*.*", ""), "https://github.com/"+repo+"/releases/tag/" + updater.getTagName());
             }
         }
