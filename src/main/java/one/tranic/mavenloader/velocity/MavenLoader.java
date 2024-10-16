@@ -13,8 +13,10 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import one.tranic.mavenloader.Config;
 import one.tranic.mavenloader.common.loader.Loader;
 import one.tranic.mavenloader.common.update.UpdateRecord;
+import one.tranic.mavenloader.common.update.UpdateSource;
 import one.tranic.mavenloader.common.update.Updater;
 import one.tranic.mavenloader.common.update.github.GithubUpdate;
+import one.tranic.mavenloader.common.update.spigot.SpigotUpdate;
 import org.slf4j.Logger;
 
 import java.io.IOException;
@@ -56,10 +58,11 @@ public class MavenLoader {
 
     private void checkUpdate() {
         if (!Config.isUpdaterCheck()) return;
-        if (Objects.equals(Config.getUpdaterSource(), "github")) {
-            updater = new GithubUpdate(BuildConstants.VERSION, "LevelTranic/MavenLoader");
-        }
-        if (updater == null) return;
+        updater = switch (UpdateSource.of(Config.getUpdaterSource())) {
+            case Github -> new GithubUpdate(BuildConstants.VERSION, "LevelTranic/MavenLoader");
+            case Spigot -> new SpigotUpdate(BuildConstants.VERSION, "119660");
+            default -> throw new RuntimeException("This update channel: "+Config.getUpdaterSource()+" is not supported");
+        };
         try {
             UpdateRecord result = updater.getUpdate();
             if (result != null) {

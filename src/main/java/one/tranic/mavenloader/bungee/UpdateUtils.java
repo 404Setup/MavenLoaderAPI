@@ -7,12 +7,13 @@ import net.md_5.bungee.api.ProxyServer;
 import one.tranic.mavenloader.Config;
 import one.tranic.mavenloader.common.MessageSender;
 import one.tranic.mavenloader.common.update.UpdateRecord;
+import one.tranic.mavenloader.common.update.UpdateSource;
 import one.tranic.mavenloader.common.update.Updater;
 import one.tranic.mavenloader.common.update.github.GithubUpdate;
+import one.tranic.mavenloader.common.update.spigot.SpigotUpdate;
 import one.tranic.mavenloader.velocity.BuildConstants;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class UpdateUtils {
     private static Updater updater;
@@ -24,10 +25,11 @@ public class UpdateUtils {
 
     public static void checkUpdate(ProxyServer server) {
         if (!Config.isUpdaterCheck()) return;
-        if (Objects.equals(Config.getUpdaterSource(), "github")) {
-            updater = new GithubUpdate(BuildConstants.VERSION, "LevelTranic/MavenLoader");
-        }
-        if (updater == null) return;
+        updater = switch (UpdateSource.of(Config.getUpdaterSource())) {
+            case Github -> new GithubUpdate(version, "LevelTranic/MavenLoader");
+            case Spigot -> new SpigotUpdate(version, "119660");
+            default -> throw new RuntimeException("This update channel: "+Config.getUpdaterSource()+" is not supported");
+        };
         try {
             UpdateRecord result = updater.getUpdate();
             if (result != null) {

@@ -14,7 +14,6 @@ public class GithubUpdate implements Updater {
     private final String myVersion;
     private final String repo;
     private final OkHttpClient client = new OkHttpClient();
-    private final UpdateRecord empty = new UpdateRecord(false, null, null, null);
     private final Gson gson = new Gson();
 
     public GithubUpdate(String myVersion, String repo) {

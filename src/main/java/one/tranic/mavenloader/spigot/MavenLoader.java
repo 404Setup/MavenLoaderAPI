@@ -6,8 +6,10 @@ import one.tranic.mavenloader.Config;
 import one.tranic.mavenloader.common.MessageSender;
 import one.tranic.mavenloader.common.loader.Loader;
 import one.tranic.mavenloader.common.update.UpdateRecord;
+import one.tranic.mavenloader.common.update.UpdateSource;
 import one.tranic.mavenloader.common.update.Updater;
 import one.tranic.mavenloader.common.update.github.GithubUpdate;
+import one.tranic.mavenloader.common.update.spigot.SpigotUpdate;
 import one.tranic.mavenloader.velocity.BuildConstants;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -15,10 +17,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public final class MavenLoader extends JavaPlugin {
-    private static Updater updater;
+    private Updater updater;
     private final Logger logger = LoggerFactory.getLogger("MavenLoaderAPI");
     private Metrics metrics;
 
@@ -42,10 +43,11 @@ public final class MavenLoader extends JavaPlugin {
 
     private void checkUpdate() {
         if (!Config.isUpdaterCheck()) return;
-        if (Objects.equals(Config.getUpdaterSource(), "github")) {
-            updater = new GithubUpdate(getDescription().getVersion(), "LevelTranic/MavenLoader");
-        }
-        if (updater == null) return;
+        updater = switch (UpdateSource.of(Config.getUpdaterSource())) {
+            case Github -> new GithubUpdate(getDescription().getVersion(), "LevelTranic/MavenLoader");
+            case Spigot -> new SpigotUpdate(getDescription().getVersion(), "119660");
+            default -> throw new RuntimeException("This update channel: "+Config.getUpdaterSource()+" is not supported");
+        };
         try {
             UpdateRecord result = updater.getUpdate();
             if (result != null) {

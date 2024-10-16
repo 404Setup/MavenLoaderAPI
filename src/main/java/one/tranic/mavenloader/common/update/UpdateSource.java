@@ -1,0 +1,30 @@
+package one.tranic.mavenloader.common.update;
+
+import org.jetbrains.annotations.NotNull;
+
+public enum UpdateSource {
+    Spigot,
+    Spiget,
+    Github,
+    Modrinth;
+
+    public static UpdateSource of(@NotNull String value) {
+        return switch (value.toLowerCase()) {
+            case "spigot" -> Spigot;
+            case "spiget" -> Spiget;
+            case "github" -> Github;
+            case "modrinth" -> Modrinth;
+            default -> throw new IllegalArgumentException("Unknown update source: " + value);
+        };
+    }
+
+    @Override
+    public String toString() {
+        return switch (this) {
+            case Spigot -> "spigot";
+            case Spiget -> "spiget";
+            case Github -> "github";
+            case Modrinth -> "modrinth";
+        };
+    }
+}
