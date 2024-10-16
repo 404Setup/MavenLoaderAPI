@@ -1,4 +1,4 @@
-package one.tranic.mavenloader.common.update;
+package one.tranic.mavenloader.common.updater;
 
 import java.io.IOException;
 

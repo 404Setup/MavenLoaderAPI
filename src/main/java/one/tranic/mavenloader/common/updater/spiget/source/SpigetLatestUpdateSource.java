@@ -1,4 +1,4 @@
-package one.tranic.mavenloader.common.update.spiget.source;
+package one.tranic.mavenloader.common.updater.spiget.source;
 
 import java.util.Date;
 

@@ -1,14 +1,14 @@
-package one.tranic.mavenloader.common.update.spiget;
+package one.tranic.mavenloader.common.updater.spiget;
 
 import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import one.tranic.mavenloader.common.Utils;
-import one.tranic.mavenloader.common.update.UpdateRecord;
-import one.tranic.mavenloader.common.update.Updater;
-import one.tranic.mavenloader.common.update.spiget.source.SpigetLatestUpdateSource;
-import one.tranic.mavenloader.common.update.spiget.source.SpigetLatestVersionSource;
+import one.tranic.mavenloader.common.updater.UpdateRecord;
+import one.tranic.mavenloader.common.updater.Updater;
+import one.tranic.mavenloader.common.updater.spiget.source.SpigetLatestUpdateSource;
+import one.tranic.mavenloader.common.updater.spiget.source.SpigetLatestVersionSource;
 
 import java.io.IOException;
 import java.util.Objects;

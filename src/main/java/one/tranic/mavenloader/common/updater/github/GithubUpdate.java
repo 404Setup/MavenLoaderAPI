@@ -1,12 +1,12 @@
-package one.tranic.mavenloader.common.update.github;
+package one.tranic.mavenloader.common.updater.github;
 
 import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import one.tranic.mavenloader.common.update.UpdateRecord;
-import one.tranic.mavenloader.common.update.Updater;
-import one.tranic.mavenloader.common.update.github.source.GithubLatestReleaseSource;
+import one.tranic.mavenloader.common.updater.UpdateRecord;
+import one.tranic.mavenloader.common.updater.Updater;
+import one.tranic.mavenloader.common.updater.github.source.GithubLatestReleaseSource;
 
 import java.io.IOException;
 import java.util.Objects;

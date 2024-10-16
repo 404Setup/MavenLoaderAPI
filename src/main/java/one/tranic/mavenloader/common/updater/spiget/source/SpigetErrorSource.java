@@ -1,4 +1,4 @@
-package one.tranic.mavenloader.common.update.spiget.source;
+package one.tranic.mavenloader.common.updater.spiget.source;
 
 public class SpigetErrorSource {
     private String error;

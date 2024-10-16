@@ -1,10 +1,10 @@
-package one.tranic.mavenloader.common.update.spigot;
+package one.tranic.mavenloader.common.updater.spigot;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import one.tranic.mavenloader.common.update.UpdateRecord;
-import one.tranic.mavenloader.common.update.Updater;
+import one.tranic.mavenloader.common.updater.UpdateRecord;
+import one.tranic.mavenloader.common.updater.Updater;
 
 import java.io.IOException;
 import java.util.Objects;

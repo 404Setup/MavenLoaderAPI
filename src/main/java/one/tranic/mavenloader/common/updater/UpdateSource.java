@@ -1,4 +1,4 @@
-package one.tranic.mavenloader.common.update;
+package one.tranic.mavenloader.common.updater;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -16,7 +16,7 @@ public enum UpdateSource {
             case "github" -> Github;
             case "hangar" -> Hangar;
             case "modrinth" -> Modrinth;
-            default -> throw new IllegalArgumentException("Unknown update source: " + value);
+            default -> throw new IllegalArgumentException("Unknown updater source: " + value);
         };
     }
 

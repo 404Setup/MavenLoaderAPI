@@ -5,12 +5,12 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import one.tranic.mavenloader.Config;
 import one.tranic.mavenloader.common.MessageSender;
 import one.tranic.mavenloader.common.loader.Loader;
-import one.tranic.mavenloader.common.update.UpdateRecord;
-import one.tranic.mavenloader.common.update.UpdateSource;
-import one.tranic.mavenloader.common.update.Updater;
-import one.tranic.mavenloader.common.update.github.GithubUpdate;
-import one.tranic.mavenloader.common.update.spiget.SpigetUpdate;
-import one.tranic.mavenloader.common.update.spigot.SpigotUpdate;
+import one.tranic.mavenloader.common.updater.UpdateRecord;
+import one.tranic.mavenloader.common.updater.UpdateSource;
+import one.tranic.mavenloader.common.updater.Updater;
+import one.tranic.mavenloader.common.updater.github.GithubUpdate;
+import one.tranic.mavenloader.common.updater.spiget.SpigetUpdate;
+import one.tranic.mavenloader.common.updater.spigot.SpigotUpdate;
 import one.tranic.mavenloader.velocity.BuildConstants;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -48,14 +48,14 @@ public final class MavenLoader extends JavaPlugin {
             case Github -> new GithubUpdate(getDescription().getVersion(), "LevelTranic/MavenLoader");
             case Spigot -> new SpigotUpdate(getDescription().getVersion(), 119660);
             case Spiget -> new SpigetUpdate(getDescription().getVersion(), 119660);
-            default -> throw new RuntimeException("This update channel: "+Config.getUpdaterSource()+" is not supported");
+            default -> throw new RuntimeException("This updater channel: "+Config.getUpdaterSource()+" is not supported");
         };
         try {
             UpdateRecord result = updater.getUpdate();
             if (result != null) {
                 if (result.hasUpdate()) {
                     ConsoleCommandSender source = getServer().getConsoleSender();
-                    MessageSender.sendMessage(Component.text("We found a MavenLoaderAPI update!", NamedTextColor.BLUE), source);
+                    MessageSender.sendMessage(Component.text("We found a MavenLoaderAPI updater!", NamedTextColor.BLUE), source);
                     MessageSender.sendMessage(Component.text("This machine Mavenloader version ", NamedTextColor.YELLOW)
                                     .append(Component.text(BuildConstants.VERSION, NamedTextColor.AQUA))
                                     .append(Component.text(", available updated version ", NamedTextColor.YELLOW))
@@ -64,7 +64,7 @@ public final class MavenLoader extends JavaPlugin {
                     );
                     MessageSender.sendMessage(Component.text("Update information: ", NamedTextColor.YELLOW), source);
                     MessageSender.sendMessage(Component.text(result.updateInfo()), source);
-                    MessageSender.sendMessage(Component.text("Download and update here: ", NamedTextColor.YELLOW)
+                    MessageSender.sendMessage(Component.text("Download and updater here: ", NamedTextColor.YELLOW)
                             .append(Component.text(result.updateUrl(), NamedTextColor.AQUA)), source);
                 } else {
                     MessageSender.sendMessage(Component.text("MavenloaderAPI is already the latest version!", NamedTextColor.GREEN), getServer().getConsoleSender());

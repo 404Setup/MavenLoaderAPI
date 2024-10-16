@@ -1,7 +1,7 @@
-package one.tranic.mavenloader.common.update.hangar;
+package one.tranic.mavenloader.common.updater.hangar;
 
-import one.tranic.mavenloader.common.update.UpdateRecord;
-import one.tranic.mavenloader.common.update.Updater;
+import one.tranic.mavenloader.common.updater.UpdateRecord;
+import one.tranic.mavenloader.common.updater.Updater;
 
 import java.io.IOException;
 
