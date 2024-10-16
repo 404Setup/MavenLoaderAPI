@@ -25,7 +25,7 @@ public class UpdateUtils {
     public static void checkUpdate(ProxyServer server) {
         if (!Config.isUpdaterCheck()) return;
         if (Objects.equals(Config.getUpdaterSource(), "github")) {
-            updater = new GithubUpdate(BuildConstants.VERSION);
+            updater = new GithubUpdate(BuildConstants.VERSION, "LevelTranic/MavenLoader");
         }
         if (updater == null) return;
         try {

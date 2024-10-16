@@ -43,7 +43,7 @@ public final class MavenLoader extends JavaPlugin {
     private void checkUpdate() {
         if (!Config.isUpdaterCheck()) return;
         if (Objects.equals(Config.getUpdaterSource(), "github")) {
-            updater = new GithubUpdate(getDescription().getVersion());
+            updater = new GithubUpdate(getDescription().getVersion(), "LevelTranic/MavenLoader");
         }
         if (updater == null) return;
         try {

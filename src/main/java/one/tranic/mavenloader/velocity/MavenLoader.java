@@ -57,7 +57,7 @@ public class MavenLoader {
     private void checkUpdate() {
         if (!Config.isUpdaterCheck()) return;
         if (Objects.equals(Config.getUpdaterSource(), "github")) {
-            updater = new GithubUpdate(BuildConstants.VERSION);
+            updater = new GithubUpdate(BuildConstants.VERSION, "LevelTranic/MavenLoader");
         }
         if (updater == null) return;
         try {
