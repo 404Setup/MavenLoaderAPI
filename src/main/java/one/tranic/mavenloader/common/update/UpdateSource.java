@@ -6,6 +6,7 @@ public enum UpdateSource {
     Spigot,
     Spiget,
     Github,
+    Hangar,
     Modrinth;
 
     public static UpdateSource of(@NotNull String value) {
@@ -13,6 +14,7 @@ public enum UpdateSource {
             case "spigot" -> Spigot;
             case "spiget" -> Spiget;
             case "github" -> Github;
+            case "hangar" -> Hangar;
             case "modrinth" -> Modrinth;
             default -> throw new IllegalArgumentException("Unknown update source: " + value);
         };
@@ -24,6 +26,7 @@ public enum UpdateSource {
             case Spigot -> "spigot";
             case Spiget -> "spiget";
             case Github -> "github";
+            case Hangar -> "hangar";
             case Modrinth -> "modrinth";
         };
     }
