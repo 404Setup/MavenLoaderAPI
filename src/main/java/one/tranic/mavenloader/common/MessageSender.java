@@ -5,18 +5,20 @@ import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.platform.bungeecord.BungeeAudiences;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import one.tranic.mavenloader.Platform;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 public class MessageSender {
     private static AudienceProvider adventure;
     private static Object plugin;
 
-    public static @Nullable AudienceProvider adventure() {
+    private static @NotNull AudienceProvider adventure() {
         if (adventure == null) {
             adventure = switch (Platform.get()) {
-                case Velocity, Paper, ShreddedPaper, Folia -> null;
+                case Velocity, Paper, ShreddedPaper, Folia ->
+                        throw new RuntimeException(Platform.get().toString() + " has native Kyori API compatibility");
                 case BungeeCord -> BungeeAudiences.create((net.md_5.bungee.api.plugin.Plugin) plugin);
                 case Spigot -> BukkitAudiences.create((org.bukkit.plugin.Plugin) plugin);
             };
@@ -24,14 +26,14 @@ public class MessageSender {
         return adventure;
     }
 
-    public static @Nullable BungeeAudiences bungeeAdventure() {
+    private static @NotNull BungeeAudiences bungeeAdventure() {
         return (BungeeAudiences) adventure();
     }
 
     /**
      * This method should not be used by the platform from Paper, it is just created to compatible with Spigot.
      */
-    public static @Nullable BukkitAudiences bukkitAdventure() {
+    private static @NotNull BukkitAudiences bukkitAdventure() {
         return (BukkitAudiences) adventure();
     }
 
@@ -45,6 +47,10 @@ public class MessageSender {
         }
     }
 
+    public static void sendMessage(String message, Object sender) {
+        sendMessage(Component.text(message), sender);
+    }
+
     public static void sendMessage(Component message, Object sender) {
         switch (Platform.get()) {
             case BungeeCord -> MessageSender.bungeeAdventure().sender((net.md_5.bungee.api.CommandSender) sender)
@@ -55,6 +61,10 @@ public class MessageSender {
                     ((org.bukkit.command.CommandSender) sender).sendMessage(LegacyComponentSerializer.legacySection().serialize(message));
             case Velocity -> ((CommandSource) sender).sendMessage(message);
         }
+    }
+
+    public static void sendMessage(ComponentLike message, Object sender) {
+        sendMessage(message.asComponent(), sender);
     }
 
     public static void close() {
