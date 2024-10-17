@@ -74,7 +74,9 @@ whitelist:
   - https://hub.spigotmc.org/nexus/content/repositories/snapshots/
   - https://repo.papermc.io/repository/maven-public/
   - https://repo.repsy.io/mvn/rdb/default
-
+updater:
+  check: true
+  source: github # Update Channel, Support: github, spigot, spiget
 ```
 
 ## Statistics
