@@ -10,6 +10,7 @@ import one.tranic.mavenloader.common.updater.UpdateRecord;
 import one.tranic.mavenloader.common.updater.UpdateSource;
 import one.tranic.mavenloader.common.updater.Updater;
 import one.tranic.mavenloader.common.updater.github.GithubUpdate;
+import one.tranic.mavenloader.common.updater.hangar.HangarUpdate;
 import one.tranic.mavenloader.common.updater.modrinth.ModrinthUpdate;
 import one.tranic.mavenloader.common.updater.modrinth.source.Loaders;
 import one.tranic.mavenloader.common.updater.spiget.SpigetUpdate;
@@ -32,6 +33,8 @@ public class UpdateUtils {
             case Spigot -> new SpigotUpdate(version, 119660);
             case Spiget -> new SpigetUpdate(version, 119660);
             case Modrinth -> new ModrinthUpdate("mavenloader-api", version, Loaders.BUNGEECORD, "1.21.1");
+            case Hangar ->
+                    new HangarUpdate(version, "mavenloaderapi", "https://hangar.papermc.io/Tranic/MavenLoaderAPI");
             default ->
                     throw new RuntimeException("This updater channel: " + Config.getUpdaterSource() + " is not supported");
         };

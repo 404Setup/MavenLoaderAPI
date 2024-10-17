@@ -9,11 +9,11 @@ import one.tranic.mavenloader.common.updater.UpdateRecord;
 import one.tranic.mavenloader.common.updater.UpdateSource;
 import one.tranic.mavenloader.common.updater.Updater;
 import one.tranic.mavenloader.common.updater.github.GithubUpdate;
+import one.tranic.mavenloader.common.updater.hangar.HangarUpdate;
 import one.tranic.mavenloader.common.updater.modrinth.ModrinthUpdate;
 import one.tranic.mavenloader.common.updater.modrinth.source.Loaders;
 import one.tranic.mavenloader.common.updater.spiget.SpigetUpdate;
 import one.tranic.mavenloader.common.updater.spigot.SpigotUpdate;
-import one.tranic.mavenloader.velocity.BuildConstants;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
@@ -24,8 +24,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class MavenLoader extends JavaPlugin {
-    private Updater updater;
     private final Logger logger = LoggerFactory.getLogger("MavenLoaderAPI");
+    private Updater updater;
     private Metrics metrics;
 
     @Override
@@ -56,8 +56,12 @@ public final class MavenLoader extends JavaPlugin {
             case Github -> new GithubUpdate(getDescription().getVersion(), "LevelTranic/MavenLoader");
             case Spigot -> new SpigotUpdate(getDescription().getVersion(), 119660);
             case Spiget -> new SpigetUpdate(getDescription().getVersion(), 119660);
-            case Modrinth -> new ModrinthUpdate("mavenloader-api", getDescription().getVersion(), Loaders.SPIGOT, version);
-            default -> throw new RuntimeException("This updater channel: "+Config.getUpdaterSource()+" is not supported");
+            case Modrinth ->
+                    new ModrinthUpdate("mavenloader-api", getDescription().getVersion(), Loaders.SPIGOT, version);
+            case Hangar ->
+                    new HangarUpdate(getDescription().getVersion(), "mavenloaderapi", "https://hangar.papermc.io/Tranic/MavenLoaderAPI");
+            default ->
+                    throw new RuntimeException("This updater channel: " + Config.getUpdaterSource() + " is not supported");
         };
         try {
             UpdateRecord result = updater.getUpdate();
