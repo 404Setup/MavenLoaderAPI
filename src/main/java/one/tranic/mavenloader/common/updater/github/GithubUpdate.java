@@ -4,8 +4,10 @@ import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import one.tranic.mavenloader.Config;
 import one.tranic.mavenloader.common.updater.UpdateRecord;
 import one.tranic.mavenloader.common.updater.Updater;
+import one.tranic.mavenloader.common.updater.VersionComparator;
 import one.tranic.mavenloader.common.updater.github.source.GithubLatestReleaseSource;
 
 import java.io.IOException;
@@ -35,8 +37,12 @@ public class GithubUpdate implements Updater {
             if (response.body() == null) return empty;
 
             GithubLatestReleaseSource updater = gson.fromJson(response.body().string(), GithubLatestReleaseSource.class);
-            if (!Objects.equals(localVersion, updater.getTagName())) {
-                return new UpdateRecord(true, updater.getTagName(), updater.getBody().replaceAll("\\s*\\*\\*Full Changelog\\*\\*.*", ""), "https://github.com/"+repo+"/releases/tag/" + updater.getTagName());
+            if (Config.isUpdaterSimpleMode()) {
+                if (!Objects.equals(localVersion, updater.getTagName())) {
+                    return new UpdateRecord(true, updater.getTagName(), updater.getBody().replaceAll("\\s*\\*\\*Full Changelog\\*\\*.*", ""), "https://github.com/" + repo + "/releases/tag/" + updater.getTagName());
+                }
+            } else if (VersionComparator.cmpVer(localVersion, updater.getTagName()) < 0) {
+                return new UpdateRecord(true, updater.getTagName(), updater.getBody().replaceAll("\\s*\\*\\*Full Changelog\\*\\*.*", ""), "https://github.com/" + repo + "/releases/tag/" + updater.getTagName());
             }
         }
         return empty;

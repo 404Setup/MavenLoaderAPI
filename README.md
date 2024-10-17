@@ -76,7 +76,8 @@ whitelist:
   - https://repo.repsy.io/mvn/rdb/default
 updater:
   check: true
-  source: github # Update Channel, Support: github, spigot, spiget
+  source: github # Update Channel, Support: github, spigot, spiget, modrinth, hangar
+  simple-mode: true # Sacrifice some detection accuracy in exchange for some performance. (default: true)
 ```
 
 ## Statistics

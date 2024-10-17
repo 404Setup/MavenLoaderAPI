@@ -4,8 +4,10 @@ import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import one.tranic.mavenloader.Config;
 import one.tranic.mavenloader.common.updater.UpdateRecord;
 import one.tranic.mavenloader.common.updater.Updater;
+import one.tranic.mavenloader.common.updater.VersionComparator;
 import one.tranic.mavenloader.common.updater.hangar.source.CombinedResponse;
 
 import java.io.IOException;
@@ -43,7 +45,11 @@ public class HangarUpdate implements Updater {
 
             CombinedResponse.VersionResult first = result.get(0);
 
-            if (!Objects.equals(localVersion, first.getName())) {
+            if (Config.isUpdaterSimpleMode()) {
+                if (!Objects.equals(localVersion, first.getName())) {
+                    return new UpdateRecord(true, first.getName(), first.getDescription(), address + "/versions/" + first.getName());
+                }
+            } else if (VersionComparator.cmpVer(localVersion, first.getName()) < 0) {
                 return new UpdateRecord(true, first.getName(), first.getDescription(), address + "/versions/" + first.getName());
             }
         }

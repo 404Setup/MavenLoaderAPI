@@ -11,8 +11,6 @@ My updater is very simple, so it cannot judge those items that split the loader 
 - Github Release
 - Spigot (No ReleaseNote)
 - Spiget (ThirdParty SpigotAPI, Supports ReleaseNote)
-
-## Planned
 - Modrinth
 - Hangar
 

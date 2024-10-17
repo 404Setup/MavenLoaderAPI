@@ -16,6 +16,11 @@ public class Config {
     private static boolean enableWhitelist = true;
     private static boolean updaterCheck = true;
     private static String updaterSource = "github";
+    private static boolean updaterSimpleMode = true;
+
+    public static boolean isUpdaterSimpleMode() {
+        return updaterSimpleMode;
+    }
 
 
     public static void loadConfig(Path dataDirectory) {
@@ -41,6 +46,7 @@ public class Config {
 
         updaterCheck = configuration.getBoolean("updater.check");
         updaterSource = configuration.getString("updater.source");
+        updaterSimpleMode = configuration.getBoolean("updater.simple-mode");
     }
 
     private static void save() throws IOException {
@@ -64,6 +70,7 @@ public class Config {
 
         configuration.addDefault("updater.check", true);
         configuration.addDefault("updater.source", "github");
+        configuration.addDefault("updater.simple-mode", true);
 
         configuration.options().copyDefaults(true);
         configuration.save(configFile);

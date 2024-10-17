@@ -4,9 +4,11 @@ import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import one.tranic.mavenloader.Config;
 import one.tranic.mavenloader.common.Utils;
 import one.tranic.mavenloader.common.updater.UpdateRecord;
 import one.tranic.mavenloader.common.updater.Updater;
+import one.tranic.mavenloader.common.updater.VersionComparator;
 import one.tranic.mavenloader.common.updater.spiget.source.SpigetLatestUpdateSource;
 import one.tranic.mavenloader.common.updater.spiget.source.SpigetLatestVersionSource;
 
@@ -37,22 +39,30 @@ public class SpigetUpdate implements Updater {
             if (response.body() == null) return empty;
 
             SpigetLatestVersionSource updater = gson.fromJson(response.body().string(), SpigetLatestVersionSource.class);
-            if (!Objects.equals(localVersion, updater.getName())) {
-                Request request2 = new Request.Builder()
-                        .get()
-                        .header("Accept", "application/json")
-                        .url("https://api.spiget.org/v2/resources/" + resourceId + "/updates/latest")
-                        .build();
-
-                try (Response response2 = client.newCall(request2).execute()) {
-                    if (!response2.isSuccessful()) throw new IOException("Unexpected code " + response2);
-                    if (response2.body() == null) return empty;
-
-                    SpigetLatestUpdateSource updater2 = gson.fromJson(response2.body().string(), SpigetLatestUpdateSource.class);
-                    return new UpdateRecord(true, updater.getName(), Utils.decodeAndStripHtml(updater2.getDescription()), "https://www.spigotmc.org/resources/" + resourceId + "/");
+            if (Config.isUpdaterSimpleMode()) {
+                if (!Objects.equals(localVersion, updater.getName())) {
+                    return do2(updater);
                 }
+            } else if (VersionComparator.cmpVer(localVersion, updater.getName()) < 0) {
+                return do2(updater);
             }
         }
         return empty;
+    }
+
+    private UpdateRecord do2(SpigetLatestVersionSource updater) throws IOException {
+        Request request2 = new Request.Builder()
+                .get()
+                .header("Accept", "application/json")
+                .url("https://api.spiget.org/v2/resources/" + resourceId + "/updates/latest")
+                .build();
+
+        try (Response response2 = client.newCall(request2).execute()) {
+            if (!response2.isSuccessful()) throw new IOException("Unexpected code " + response2);
+            if (response2.body() == null) return empty;
+
+            SpigetLatestUpdateSource updater2 = gson.fromJson(response2.body().string(), SpigetLatestUpdateSource.class);
+            return new UpdateRecord(true, updater.getName(), Utils.decodeAndStripHtml(updater2.getDescription()), "https://www.spigotmc.org/resources/" + resourceId + "/");
+        }
     }
 }

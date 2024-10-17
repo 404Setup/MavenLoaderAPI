@@ -3,8 +3,10 @@ package one.tranic.mavenloader.common.updater.spigot;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import one.tranic.mavenloader.Config;
 import one.tranic.mavenloader.common.updater.UpdateRecord;
 import one.tranic.mavenloader.common.updater.Updater;
+import one.tranic.mavenloader.common.updater.VersionComparator;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -36,7 +38,11 @@ public class SpigotUpdate implements Updater {
                 } else throw new IOException("Unexpected code " + response);
             }
 
-            if (!Objects.equals(localVersion, body)) {
+            if (Config.isUpdaterSimpleMode()) {
+                if (!Objects.equals(localVersion, body)) {
+                    return new UpdateRecord(true, body, "Update info is empty", "https://www.spigotmc.org/resources/" + resourceId + "/");
+                }
+            } else if (VersionComparator.cmpVer(localVersion, body) < 0) {
                 return new UpdateRecord(true, body, "Update info is empty", "https://www.spigotmc.org/resources/" + resourceId + "/");
             }
         }

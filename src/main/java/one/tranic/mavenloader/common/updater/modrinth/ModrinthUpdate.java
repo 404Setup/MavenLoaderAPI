@@ -4,8 +4,10 @@ import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import one.tranic.mavenloader.Config;
 import one.tranic.mavenloader.common.updater.UpdateRecord;
 import one.tranic.mavenloader.common.updater.Updater;
+import one.tranic.mavenloader.common.updater.VersionComparator;
 import one.tranic.mavenloader.common.updater.modrinth.source.Loaders;
 import one.tranic.mavenloader.common.updater.modrinth.source.ModrinthVersionSource;
 import org.jetbrains.annotations.NotNull;
@@ -14,10 +16,14 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class ModrinthUpdate implements Updater {
-    private @NotNull final String slug;
-    private @NotNull final String localVersion;
-    private @NotNull final String loader;
-    private @NotNull final String gameVersion;
+    private @NotNull
+    final String slug;
+    private @NotNull
+    final String localVersion;
+    private @NotNull
+    final String loader;
+    private @NotNull
+    final String gameVersion;
     private final OkHttpClient client = new OkHttpClient();
     private final Gson gson = new Gson();
 
@@ -75,14 +81,14 @@ public class ModrinthUpdate implements Updater {
             if (updater.length == 0) return empty;
 
             for (ModrinthVersionSource source : updater) {
-                for (String ver : source.getGameVersions()) {
-                    if (ver.equals(gameVersion)) {
-                        for (String l : source.getLoaders()) {
-                            if (l.equals(loader) && !Objects.equals(source.getVersionNumber(), localVersion)) {
-                                return new UpdateRecord(true, source.getVersionNumber(), source.getChangelog(), "https://modrinth.com/plugin/" + source.getProjectId() + "/version/" + source.getId());
-                            }
-                        }
+                if (!source.getGameVersions().contains(gameVersion)) return empty;
+                if (!source.getLoaders().contains(loader)) return empty;
+                if (Config.isUpdaterSimpleMode()) {
+                    if (!Objects.equals(source.getVersionNumber(), localVersion)) {
+                        return new UpdateRecord(true, source.getVersionNumber(), source.getChangelog(), "https://modrinth.com/plugin/" + source.getProjectId() + "/version/" + source.getId());
                     }
+                } else if (VersionComparator.cmpVer(localVersion, source.getVersionNumber()) < 0) {
+                    return new UpdateRecord(true, source.getVersionNumber(), source.getChangelog(), "https://modrinth.com/plugin/" + source.getProjectId() + "/version/" + source.getId());
                 }
             }
         }
