@@ -20,7 +20,7 @@ A custom external dependency loader is prepared to easily reduce the package siz
 - Spigot/Paper/Folia 1.18.2 ↔ latest (Optional)
 
 ## Plugin Compatibility
-- PlugManX 2.4.2 (Have some ideas, still waiting to be merged)
+- PlugManX (1.6-SNAPSHOT will not be provided, and it may be provided in future updates.)
 
 ## Download
 All places use the same build pack, I just left these links to let you know I'm only releasing it in these places.
@@ -56,7 +56,7 @@ Example in: [MavenLoader-Example](https://github.com/LevelTranic/MavenLoader-Exa
 - 1.2-SNAPSHOT: Implementing `maven.yml`
 - 1.4-SNAPSHOT: Implementing repository whitelist
 - 1.5-SNAPSHOT: Support Bukkit
-- 1.6-SNAPSHOT (Coming soon): Support BungeeCord, PlugmanX. `maven.yml` support `platform`, `reference-load` keyword. Remove external API (now only allow maven.yml)
+- 1.6-SNAPSHOT (Coming soon): Support BungeeCord. `maven.yml` support `platform`, `reference-load` keyword. Remove external API (now only allow maven.yml)
 
 ## Config
 ```yaml
