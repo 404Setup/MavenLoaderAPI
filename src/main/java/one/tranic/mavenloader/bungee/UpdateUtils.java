@@ -10,9 +10,10 @@ import one.tranic.mavenloader.common.updater.UpdateRecord;
 import one.tranic.mavenloader.common.updater.UpdateSource;
 import one.tranic.mavenloader.common.updater.Updater;
 import one.tranic.mavenloader.common.updater.github.GithubUpdate;
+import one.tranic.mavenloader.common.updater.modrinth.ModrinthUpdate;
+import one.tranic.mavenloader.common.updater.modrinth.source.Loaders;
 import one.tranic.mavenloader.common.updater.spiget.SpigetUpdate;
 import one.tranic.mavenloader.common.updater.spigot.SpigotUpdate;
-import one.tranic.mavenloader.velocity.BuildConstants;
 
 import java.io.IOException;
 
@@ -30,7 +31,9 @@ public class UpdateUtils {
             case Github -> new GithubUpdate(version, "LevelTranic/MavenLoader");
             case Spigot -> new SpigotUpdate(version, 119660);
             case Spiget -> new SpigetUpdate(version, 119660);
-            default -> throw new RuntimeException("This updater channel: "+Config.getUpdaterSource()+" is not supported");
+            case Modrinth -> new ModrinthUpdate("mavenloader-api", version, Loaders.BUNGEECORD, "1.21.1");
+            default ->
+                    throw new RuntimeException("This updater channel: " + Config.getUpdaterSource() + " is not supported");
         };
         try {
             UpdateRecord result = updater.getUpdate();
@@ -39,7 +42,7 @@ public class UpdateUtils {
                     CommandSender source = server.getConsole();
                     MessageSender.sendMessage(Component.text("We found a MavenLoaderAPI updater!", NamedTextColor.BLUE), source);
                     MessageSender.sendMessage(Component.text("This machine Mavenloader version ", NamedTextColor.YELLOW)
-                                    .append(Component.text(BuildConstants.VERSION, NamedTextColor.AQUA))
+                                    .append(Component.text(version, NamedTextColor.AQUA))
                                     .append(Component.text(", available updated version ", NamedTextColor.YELLOW))
                                     .append(Component.text(result.newVersion(), NamedTextColor.AQUA))
                             , source

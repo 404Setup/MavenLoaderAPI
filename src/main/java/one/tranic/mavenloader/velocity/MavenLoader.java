@@ -16,6 +16,8 @@ import one.tranic.mavenloader.common.updater.UpdateRecord;
 import one.tranic.mavenloader.common.updater.UpdateSource;
 import one.tranic.mavenloader.common.updater.Updater;
 import one.tranic.mavenloader.common.updater.github.GithubUpdate;
+import one.tranic.mavenloader.common.updater.modrinth.ModrinthUpdate;
+import one.tranic.mavenloader.common.updater.modrinth.source.Loaders;
 import one.tranic.mavenloader.common.updater.spiget.SpigetUpdate;
 import one.tranic.mavenloader.common.updater.spigot.SpigotUpdate;
 import org.slf4j.Logger;
@@ -62,6 +64,7 @@ public class MavenLoader {
             case Github -> new GithubUpdate(BuildConstants.VERSION, "LevelTranic/MavenLoader");
             case Spigot -> new SpigotUpdate(BuildConstants.VERSION, 119660);
             case Spiget -> new SpigetUpdate(BuildConstants.VERSION, 119660);
+            case Modrinth -> new ModrinthUpdate("mavenloader-api", BuildConstants.VERSION, Loaders.VELOCITY, "1.21.1");
             default -> throw new RuntimeException("This updater channel: "+Config.getUpdaterSource()+" is not supported");
         };
         try {

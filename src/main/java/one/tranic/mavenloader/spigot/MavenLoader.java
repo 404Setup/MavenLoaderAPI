@@ -9,6 +9,8 @@ import one.tranic.mavenloader.common.updater.UpdateRecord;
 import one.tranic.mavenloader.common.updater.UpdateSource;
 import one.tranic.mavenloader.common.updater.Updater;
 import one.tranic.mavenloader.common.updater.github.GithubUpdate;
+import one.tranic.mavenloader.common.updater.modrinth.ModrinthUpdate;
+import one.tranic.mavenloader.common.updater.modrinth.source.Loaders;
 import one.tranic.mavenloader.common.updater.spiget.SpigetUpdate;
 import one.tranic.mavenloader.common.updater.spigot.SpigotUpdate;
 import one.tranic.mavenloader.velocity.BuildConstants;
@@ -18,6 +20,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class MavenLoader extends JavaPlugin {
     private Updater updater;
@@ -44,10 +48,15 @@ public final class MavenLoader extends JavaPlugin {
 
     private void checkUpdate() {
         if (!Config.isUpdaterCheck()) return;
+        Pattern pattern = Pattern.compile("^\\d+\\.\\d+(?:\\.\\d+)?");
+        Matcher matcher = pattern.matcher(getServer().getBukkitVersion());
+        String version = matcher.find() ? matcher.group() : "1.21.1";
+
         updater = switch (UpdateSource.of(Config.getUpdaterSource())) {
             case Github -> new GithubUpdate(getDescription().getVersion(), "LevelTranic/MavenLoader");
             case Spigot -> new SpigotUpdate(getDescription().getVersion(), 119660);
             case Spiget -> new SpigetUpdate(getDescription().getVersion(), 119660);
+            case Modrinth -> new ModrinthUpdate("mavenloader-api", getDescription().getVersion(), Loaders.SPIGOT, version);
             default -> throw new RuntimeException("This updater channel: "+Config.getUpdaterSource()+" is not supported");
         };
         try {
@@ -57,7 +66,7 @@ public final class MavenLoader extends JavaPlugin {
                     ConsoleCommandSender source = getServer().getConsoleSender();
                     MessageSender.sendMessage(Component.text("We found a MavenLoaderAPI updater!", NamedTextColor.BLUE), source);
                     MessageSender.sendMessage(Component.text("This machine Mavenloader version ", NamedTextColor.YELLOW)
-                                    .append(Component.text(BuildConstants.VERSION, NamedTextColor.AQUA))
+                                    .append(Component.text(getDescription().getVersion(), NamedTextColor.AQUA))
                                     .append(Component.text(", available updated version ", NamedTextColor.YELLOW))
                                     .append(Component.text(result.newVersion(), NamedTextColor.AQUA))
                             , source
