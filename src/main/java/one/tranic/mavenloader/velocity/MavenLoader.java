@@ -9,7 +9,6 @@ import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import one.tranic.mavenloader.common.MavenLoaderUpdater;
 import one.tranic.mavenloader.common.loader.Loader;
-import one.tranic.mavenloader.common.updater.Updater;
 import one.tranic.mavenloader.common.updater.modrinth.source.Loaders;
 import org.slf4j.Logger;
 
@@ -24,7 +23,6 @@ import java.nio.file.Path;
         authors = {"404"}
 )
 public class MavenLoader {
-    private static Updater updater;
     private final Logger logger;
     private final Metrics.Factory metricsFactory;
     private final @DataDirectory Path dataDirectory;

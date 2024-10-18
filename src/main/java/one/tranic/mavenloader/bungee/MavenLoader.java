@@ -12,7 +12,6 @@ public final class MavenLoader extends Plugin {
     private final Logger logger = LoggerFactory.getLogger("MavenLoaderAPI");
     private Metrics metrics;
 
-
     public MavenLoader() {
         super();
         Loader.MainLoader(getDataFolder().toPath(), logger);

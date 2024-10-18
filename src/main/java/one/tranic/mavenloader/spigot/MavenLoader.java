@@ -4,7 +4,6 @@ import one.tranic.mavenloader.Platform;
 import one.tranic.mavenloader.common.MavenLoaderUpdater;
 import one.tranic.mavenloader.common.MessageSender;
 import one.tranic.mavenloader.common.loader.Loader;
-import one.tranic.mavenloader.common.updater.Updater;
 import one.tranic.mavenloader.common.updater.modrinth.source.Loaders;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
 
 public final class MavenLoader extends JavaPlugin {
     private final Logger logger = LoggerFactory.getLogger("MavenLoaderAPI");
-    private Updater updater;
     private Metrics metrics;
 
     @Override
