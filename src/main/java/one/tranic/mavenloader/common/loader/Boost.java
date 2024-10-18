@@ -1,6 +1,7 @@
 package one.tranic.mavenloader.common.loader;
 
 import org.eclipse.aether.repository.RemoteRepository;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +21,6 @@ import java.util.concurrent.*;
  * used as the default Maven repository for dependency resolution.
  */
 public class Boost {
-
     private static final Map<String, String> mirrors = new HashMap<>();
     private static final Logger logger = LoggerFactory.getLogger("LibraryResolver");
     private static final String central = "https://repo.maven.apache.org/maven2";
@@ -54,7 +54,7 @@ public class Boost {
      * @param str the repository URL to check
      * @return {@code true} if the URL matches the central Maven repository, {@code false} otherwise
      */
-    public static boolean isCentral(String str) {
+    public static boolean isCentral(@NotNull String str) {
         try {
             String s = URI.create(str).getHost();
             return Objects.equals(s, centralUri.getHost()) || Objects.equals(s, central2Uri.getHost());
@@ -69,7 +69,7 @@ public class Boost {
      * @param remoteRepository the repository to check
      * @return {@code true} if the repository matches the central Maven repository, {@code false} otherwise
      */
-    public static boolean isCentral(RemoteRepository remoteRepository) {
+    public static boolean isCentral(@NotNull RemoteRepository remoteRepository) {
         return isCentral(remoteRepository.getUrl());
     }
 
@@ -103,10 +103,10 @@ public class Boost {
      * boolean b = Boost.replace("https://repo.maven.apache.org/maven2");
      * }</pre>
      *
-     * @param str the repository URL to potentially replace
-     * @return the mirror URL if the repository is central, or the original URL otherwise
+     * @param str the repository URL to potentially replace, not be {@code null}.
+     * @return the mirror URL if the repository is central, or the original URL otherwise, not be {@code null}.
      */
-    public static String replace(String str) {
+    public static @NotNull String replace(@NotNull String str) {
         return Objects.equals(str, central) ? maven : str;
     }
 
@@ -152,11 +152,11 @@ public class Boost {
     /**
      * Tests the response time of a given mirror by sending a GET request and measuring the round-trip time.
      *
-     * @param name the name of the mirror being tested
-     * @param url  the URL of the mirror being tested
-     * @return a {@link MirrorResult} object containing the mirror URL and the response time
+     * @param name the name of the mirror being tested, not be {@code null}.
+     * @param url  the URL of the mirror being tested, not be {@code null}.
+     * @return a {@link MirrorResult} object containing the mirror URL and the response time, not be {@code null}.
      */
-    private static MirrorResult testMirror(String name, String url) {
+    private static @NotNull MirrorResult testMirror(@NotNull String name, @NotNull String url) {
         long start = System.currentTimeMillis();
         HttpURLConnection connection = null;
         try {
@@ -190,7 +190,7 @@ public class Boost {
         String url;
         long time;
 
-        MirrorResult(String url, long time) {
+        MirrorResult(@NotNull String url, long time) {
             this.url = url;
             this.time = time;
         }

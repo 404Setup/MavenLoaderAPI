@@ -8,6 +8,7 @@ import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import one.tranic.mavenloader.Platform;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class MessageSender {
     private static AudienceProvider adventure;
@@ -50,11 +51,13 @@ public class MessageSender {
         }
     }
 
-    public static void sendMessage(String message, Object sender) {
+    public static void sendMessage(@Nullable String message, @NotNull Object sender) {
+        if (message == null) return;
         sendMessage(Component.text(message), sender);
     }
 
-    public static void sendMessage(Component message, Object sender) {
+    public static void sendMessage(@Nullable Component message, @NotNull Object sender) {
+        if (message == null) return;
         switch (Platform.get()) {
             case BungeeCord -> MessageSender.bungeeAdventure().sender((net.md_5.bungee.api.CommandSender) sender)
                     .sendMessage(message);
@@ -66,7 +69,8 @@ public class MessageSender {
         }
     }
 
-    public static void sendMessage(ComponentLike message, Object sender) {
+    public static void sendMessage(@Nullable ComponentLike message, Object sender) {
+        if (message == null) return;
         sendMessage(message.asComponent(), sender);
     }
 

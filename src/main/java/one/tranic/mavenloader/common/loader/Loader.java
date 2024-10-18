@@ -49,18 +49,6 @@ public class Loader {
         }
     }
 
-    private void loader(LibraryResolver lr, Resolver resolver) throws Exception {
-        if (resolver.isReferenceLoad()) {
-            for (String depend : resolver.dependency()) {
-                lr.addDependency(depend, resolver.plugin);
-            }
-        } else {
-            for (String depend : resolver.dependency()) {
-                lr.addDependency(depend, new Plugin(LibraryResolver.class, resolver.plugin.name)); // Need to know who loaded this jar file, not all thrown to MavenLoader
-            }
-        }
-    }
-
     public static void MainLoader(@NotNull Path directory, @NotNull Logger logger) {
         Config.loadConfig(directory);
         if (Config.getEnableWhitelist()) {
@@ -76,8 +64,19 @@ public class Loader {
         }
     }
 
-    @NotNull
-    private List<String> clearRepository(@NotNull List<Resolver> resolvers) {
+    private void loader(@NotNull LibraryResolver lr, @NotNull Resolver resolver) throws Exception {
+        if (resolver.isReferenceLoad()) {
+            for (String depend : resolver.dependency()) {
+                lr.addDependency(depend, resolver.plugin);
+            }
+        } else {
+            for (String depend : resolver.dependency()) {
+                lr.addDependency(depend, new Plugin(LibraryResolver.class, resolver.plugin.name)); // Need to know who loaded this jar file, not all thrown to MavenLoader
+            }
+        }
+    }
+
+    private @NotNull List<String> clearRepository(@NotNull List<Resolver> resolvers) {
         ArrayList<String> repos = new ArrayList<>();
         for (Resolver resolver : resolvers) {
             if (resolver.repository.isEmpty()) continue;
@@ -88,8 +87,7 @@ public class Loader {
         return repos;
     }
 
-    @Nullable
-    private Resolver checkForMavenYml(@NotNull Path jarPath) throws Exception {
+    private @Nullable Resolver checkForMavenYml(@NotNull Path jarPath) throws Exception {
         try (JarFile jarFile = new JarFile(jarPath.toFile())) {
             ZipEntry mavenYmlEntry = jarFile.getEntry("maven.yml");
             if (mavenYmlEntry != null && !mavenYmlEntry.isDirectory()) {
@@ -99,8 +97,7 @@ public class Loader {
         }
     }
 
-    @Nullable
-    private Resolver parseMavenYml(@NotNull JarFile jarFile, @NotNull ZipEntry entry) throws Exception {
+    private @Nullable Resolver parseMavenYml(@NotNull JarFile jarFile, @NotNull ZipEntry entry) throws Exception {
         try (var inputStream = jarFile.getInputStream(entry)) {
             YamlConfiguration c = YamlConfiguration.loadConfiguration(inputStream);
 
@@ -144,7 +141,6 @@ public class Loader {
         };
     }
 
-    @Nullable
     private Loader.@Nullable Plugin getVelocityPluginInfo(@NotNull JarFile file) {
         ZipEntry entry = file.getEntry("velocity-plugin.json");
         if (entry != null && !entry.isDirectory()) {
@@ -209,5 +205,6 @@ public class Loader {
                             Plugin plugin) {
     }
 
-    public record Plugin(Class<?> main, String name) {}
+    public record Plugin(Class<?> main, String name) {
+    }
 }

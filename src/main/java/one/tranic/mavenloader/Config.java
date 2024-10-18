@@ -1,5 +1,6 @@
 package one.tranic.mavenloader;
 
+import org.jetbrains.annotations.NotNull;
 import org.simpleyaml.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -23,7 +24,7 @@ public class Config {
     }
 
 
-    public static void loadConfig(Path dataDirectory) {
+    public static void loadConfig(@NotNull Path dataDirectory) {
         configFile = dataDirectory.getParent().resolve("MavenLoader").resolve("config.yml").toFile();
         try {
             if (!configFile.exists()) {

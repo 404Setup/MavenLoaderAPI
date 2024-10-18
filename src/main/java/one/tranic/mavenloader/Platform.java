@@ -1,5 +1,7 @@
 package one.tranic.mavenloader;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Enum representing various Minecraft server platforms.
  * Supported platforms include:
@@ -65,7 +67,7 @@ public enum Platform {
      *
      * @return the detected {@link Platform}, or {@link Platform#Spigot} as the default if no other platform is found.
      */
-    public static Platform get() {
+    public static @NotNull Platform get() {
         if (platform != null) {
             return platform;
         }
@@ -130,7 +132,7 @@ public enum Platform {
      * @return the corresponding {@link Platform} enum constant
      * @throws IllegalArgumentException if the platform name is unknown
      */
-    public static Platform of(String name) {
+    public static @NotNull Platform of(@NotNull String name) {
         return switch (name.toLowerCase()) {
             case "velocity" -> Velocity;
             case "bungeecord" -> BungeeCord;
@@ -148,7 +150,7 @@ public enum Platform {
      * @return the platform name in lowercase (e.g., "velocity", "spigot").
      */
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return switch (this) {
             case Velocity -> "velocity";
             case BungeeCord -> "bungeecord";
@@ -159,7 +161,7 @@ public enum Platform {
         };
     }
 
-    public String toRawString() {
+    public @NotNull String toRawString() {
         return switch (this) {
             case Velocity -> "Velocity";
             case BungeeCord -> "BungeeCord";

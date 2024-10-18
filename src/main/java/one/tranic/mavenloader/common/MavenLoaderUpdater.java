@@ -11,13 +11,14 @@ import one.tranic.mavenloader.common.updater.modrinth.ModrinthUpdate;
 import one.tranic.mavenloader.common.updater.modrinth.source.Loaders;
 import one.tranic.mavenloader.common.updater.spiget.SpigetUpdate;
 import one.tranic.mavenloader.common.updater.spigot.SpigotUpdate;
+import org.jetbrains.annotations.NotNull;
 
 public class MavenLoaderUpdater {
     private final Updater updater;
     private final String localVersion;
     private final Object sender;
 
-    public MavenLoaderUpdater(final String localVersion, final Object sender, final Loaders loader) {
+    public MavenLoaderUpdater(@NotNull final String localVersion, @NotNull final Object sender, @NotNull final Loaders loader) {
         if (!Config.isUpdaterCheck()) {
             this.localVersion = null;
             this.sender = null;
@@ -31,7 +32,8 @@ public class MavenLoaderUpdater {
             case Github -> new GithubUpdate(localVersion, "LevelTranic/MavenLoader");
             case Spigot -> new SpigotUpdate(localVersion, 119660);
             case Spiget -> new SpigetUpdate(localVersion, 119660);
-            case Modrinth -> new ModrinthUpdate("mavenloader-api", localVersion, loader, "1.21.1"); // Hardcoded to the highest currently compatible game version.
+            case Modrinth ->
+                    new ModrinthUpdate("mavenloader-api", localVersion, loader, "1.21.1"); // Hardcoded to the highest currently compatible game version.
             case Hangar ->
                     new HangarUpdate(localVersion, "mavenloaderapi", "https://hangar.papermc.io/Tranic/MavenLoaderAPI");
             default ->
