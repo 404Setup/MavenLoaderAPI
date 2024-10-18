@@ -73,28 +73,23 @@ public class MavenLoader {
                     throw new RuntimeException("This updater channel: " + Config.getUpdaterSource() + " is not supported");
         };
 
-        CompletableFuture.runAsync(() -> {
-            try {
-                UpdateRecord result = updater.getUpdate();
-                if (result != null) {
-                    if (result.hasUpdate()) {
-                        ConsoleCommandSource source = proxy.getConsoleCommandSource();
-                        source.sendMessage(Component.text("We found a MavenLoaderAPI updater!", NamedTextColor.BLUE));
-                        source.sendMessage(Component.text("This machine Mavenloader version ", NamedTextColor.YELLOW)
-                                .append(Component.text(BuildConstants.VERSION, NamedTextColor.AQUA))
-                                .append(Component.text(", available updated version ", NamedTextColor.YELLOW))
-                                .append(Component.text(result.newVersion(), NamedTextColor.AQUA))
-                        );
-                        source.sendMessage(Component.text("Update information: ", NamedTextColor.YELLOW));
-                        source.sendMessage(Component.text(result.updateInfo()));
-                        source.sendMessage(Component.text("Download and updater here: ", NamedTextColor.YELLOW)
-                                .append(Component.text(result.updateUrl(), NamedTextColor.AQUA)));
-                    } else {
-                        proxy.getConsoleCommandSource().sendMessage(Component.text("MavenloaderAPI is already the latest version!", NamedTextColor.GREEN));
-                    }
+        updater.getUpdateAsync((result) -> {
+            if (result != null) {
+                if (result.hasUpdate()) {
+                    ConsoleCommandSource source = proxy.getConsoleCommandSource();
+                    source.sendMessage(Component.text("We found a MavenLoaderAPI updater!", NamedTextColor.BLUE));
+                    source.sendMessage(Component.text("This machine Mavenloader version ", NamedTextColor.YELLOW)
+                            .append(Component.text(BuildConstants.VERSION, NamedTextColor.AQUA))
+                            .append(Component.text(", available updated version ", NamedTextColor.YELLOW))
+                            .append(Component.text(result.newVersion(), NamedTextColor.AQUA))
+                    );
+                    source.sendMessage(Component.text("Update information: ", NamedTextColor.YELLOW));
+                    source.sendMessage(Component.text(result.updateInfo()));
+                    source.sendMessage(Component.text("Download and updater here: ", NamedTextColor.YELLOW)
+                            .append(Component.text(result.updateUrl(), NamedTextColor.AQUA)));
+                } else {
+                    proxy.getConsoleCommandSource().sendMessage(Component.text("MavenloaderAPI is already the latest version!", NamedTextColor.GREEN));
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         });
     }
