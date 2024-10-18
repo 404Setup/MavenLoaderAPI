@@ -12,7 +12,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import one.tranic.mavenloader.Config;
 import one.tranic.mavenloader.common.loader.Loader;
-import one.tranic.mavenloader.common.updater.UpdateRecord;
 import one.tranic.mavenloader.common.updater.UpdateSource;
 import one.tranic.mavenloader.common.updater.Updater;
 import one.tranic.mavenloader.common.updater.github.GithubUpdate;
@@ -23,9 +22,7 @@ import one.tranic.mavenloader.common.updater.spiget.SpigetUpdate;
 import one.tranic.mavenloader.common.updater.spigot.SpigotUpdate;
 import org.slf4j.Logger;
 
-import java.io.IOException;
 import java.nio.file.Path;
-import java.util.concurrent.CompletableFuture;
 
 @Plugin(id = "maven-loader", name = "MavenLoader", version = BuildConstants.VERSION, url = "https://tranic.one", authors = {"404"})
 public class MavenLoader {
