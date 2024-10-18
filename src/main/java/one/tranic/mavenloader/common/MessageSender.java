@@ -1,12 +1,13 @@
 package one.tranic.mavenloader.common;
 
-import com.velocitypowered.api.command.CommandSource;
 import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.platform.bungeecord.BungeeAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.plugin.Plugin;
 import one.tranic.mavenloader.Platform;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,7 +20,7 @@ public class MessageSender {
             adventure = switch (Platform.get()) {
                 case Velocity, Paper, ShreddedPaper, Folia ->
                         throw new RuntimeException(Platform.get().toString() + " has native Kyori API compatibility");
-                case BungeeCord -> BungeeAudiences.create((net.md_5.bungee.api.plugin.Plugin) plugin);
+                case BungeeCord -> BungeeAudiences.create((Plugin) plugin);
                 case Spigot -> BukkitAudiences.create((org.bukkit.plugin.Plugin) plugin);
             };
         }
@@ -37,8 +38,12 @@ public class MessageSender {
         return (BukkitAudiences) adventure();
     }
 
-    public static void setPlugin(Object plugin) {
-        MessageSender.plugin = plugin;
+    public static void setPlugin(@NotNull Object plugin) {
+        if (MessageSender.plugin == null) {
+            if (!plugin.getClass().getPackage().getName().startsWith("one.tranic.mavenloader"))
+                throw new RuntimeException(plugin.getClass().getCanonicalName() + " is not a MavenLoaderAPI class");
+            MessageSender.plugin = plugin;
+        }
         switch (Platform.get()) {
             case BungeeCord, Spigot: {
                 if (adventure == null)
@@ -53,13 +58,13 @@ public class MessageSender {
 
     public static void sendMessage(Component message, Object sender) {
         switch (Platform.get()) {
-            case BungeeCord -> MessageSender.bungeeAdventure().sender((net.md_5.bungee.api.CommandSender) sender)
+            case BungeeCord -> MessageSender.bungeeAdventure().sender((CommandSender) sender)
                     .sendMessage(message);
             case Spigot ->
                     MessageSender.bukkitAdventure().sender((org.bukkit.command.CommandSender) sender).sendMessage(message);
             case Paper, Folia, ShreddedPaper ->
                     ((org.bukkit.command.CommandSender) sender).sendMessage(LegacyComponentSerializer.legacySection().serialize(message));
-            case Velocity -> ((CommandSource) sender).sendMessage(message);
+            case Velocity -> ((com.velocitypowered.api.command.CommandSource) sender).sendMessage(message);
         }
     }
 
