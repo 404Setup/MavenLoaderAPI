@@ -1,25 +1,14 @@
 package one.tranic.mavenloader.spigot;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import one.tranic.mavenloader.Config;
+import one.tranic.mavenloader.Platform;
+import one.tranic.mavenloader.common.MavenLoaderUpdater;
 import one.tranic.mavenloader.common.MessageSender;
 import one.tranic.mavenloader.common.loader.Loader;
-import one.tranic.mavenloader.common.updater.UpdateSource;
 import one.tranic.mavenloader.common.updater.Updater;
-import one.tranic.mavenloader.common.updater.github.GithubUpdate;
-import one.tranic.mavenloader.common.updater.hangar.HangarUpdate;
-import one.tranic.mavenloader.common.updater.modrinth.ModrinthUpdate;
 import one.tranic.mavenloader.common.updater.modrinth.source.Loaders;
-import one.tranic.mavenloader.common.updater.spiget.SpigetUpdate;
-import one.tranic.mavenloader.common.updater.spigot.SpigotUpdate;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public final class MavenLoader extends JavaPlugin {
     private final Logger logger = LoggerFactory.getLogger("MavenLoaderAPI");
@@ -32,7 +21,7 @@ public final class MavenLoader extends JavaPlugin {
         logger.info("Initializing MavenLoaderAPI (Spigot)");
         metrics = new Metrics(this, 23501);
         MessageSender.setPlugin(this);
-        checkUpdate();
+        new MavenLoaderUpdater(getDescription().getVersion(), getServer().getConsoleSender(), Loaders.of(Platform.get().toString())).checkUpdate();
     }
 
     @Override
@@ -44,11 +33,11 @@ public final class MavenLoader extends JavaPlugin {
         MessageSender.close();
     }
 
-    private void checkUpdate() {
+    /*private void checkUpdate() {
         if (!Config.isUpdaterCheck()) return;
-        Pattern pattern = Pattern.compile("^\\d+\\.\\d+(?:\\.\\d+)?");
+        Pattern pattern = Pattern.compile("^\\d+\\.\\d+(?:\\.\\d+)?"); // Remove the content after 1.20.6 in 1.20.6-R0.1-SNAPSHOT (like this)
         Matcher matcher = pattern.matcher(getServer().getBukkitVersion());
-        String version = matcher.find() ? matcher.group() : "1.21.1";
+        String version = matcher.find() ? matcher.group() : "1.21.1"; // By default, it is set to 1.21.1
 
         updater = switch (UpdateSource.of(Config.getUpdaterSource())) {
             case Github -> new GithubUpdate(getDescription().getVersion(), "LevelTranic/MavenLoader");
@@ -81,5 +70,5 @@ public final class MavenLoader extends JavaPlugin {
                 }
             }
         });
-    }
+    }*/
 }

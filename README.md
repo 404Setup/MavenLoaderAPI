@@ -22,6 +22,18 @@ A custom external dependency loader is prepared to easily reduce the package siz
 ## Plugin Compatibility
 - PlugManX (1.6-SNAPSHOT will not be provided, and it may be provided in future updates.)
 
+## Test Information
+Versions starting from 1.18.2 should work fine.
+
+if you have problems, please open an issues and give me the log and your environment information.
+
+- Java 23 (Specified as 21 in Spigot and BungeeCord)
+- Spigot 1.21 latest
+- Folia 1.21.1 latest
+- ShreddedPaper 1.20.6 latest
+- BungeeCord 1.21 a89cf5f:1869
+- Velocity 3.3.0-SNAPSHOT git-2016d148-b436
+
 ## Download
 All places use the same build pack, I just left these links to let you know I'm only releasing it in these places.
 

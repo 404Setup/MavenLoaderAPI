@@ -1,8 +1,10 @@
 package one.tranic.mavenloader.bungee;
 
 import net.md_5.bungee.api.plugin.Plugin;
+import one.tranic.mavenloader.common.MavenLoaderUpdater;
 import one.tranic.mavenloader.common.MessageSender;
 import one.tranic.mavenloader.common.loader.Loader;
+import one.tranic.mavenloader.common.updater.modrinth.source.Loaders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,8 +23,7 @@ public final class MavenLoader extends Plugin {
         logger.info("Initializing MavenLoaderAPI (BungeeCord)");
         metrics = new Metrics(this, 23524);
         MessageSender.setPlugin(this);
-        UpdateUtils.setVersion(getDescription().getVersion());
-        UpdateUtils.checkUpdate(getProxy());
+        new MavenLoaderUpdater(getDescription().getVersion(), getProxy().getConsole(), Loaders.BUNGEECORD).checkUpdate();
     }
 
     @Override
