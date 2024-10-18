@@ -115,6 +115,7 @@ public class Boost {
      * The mirror with the shortest response time is selected as the default Maven repository.
      */
     private static void selectMirror() {
+        if (!Objects.equals(maven, "")) return;
         ExecutorService executor = Executors.newCachedThreadPool();
         List<Future<MirrorResult>> futures = new ArrayList<>();
         for (Map.Entry<String, String> entry : mirrors.entrySet()) {
