@@ -194,7 +194,7 @@ public class Loader {
         if (entry != null && !entry.isDirectory()) {
             return getYmlClass(file, entry);
         }
-        return null;
+        return getBukkitClass(file);
     }
 
     @Nullable
