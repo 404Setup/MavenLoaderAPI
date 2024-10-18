@@ -44,15 +44,19 @@ public class Loader {
             }
 
             for (Resolver resolver : resolvers) {
-                if (resolver.isReferenceLoad()) {
-                    for (String depend : resolver.dependency()) {
-                        r.addDependency(depend, resolver.pluginClass());
-                    }
-                } else {
-                    for (String depend : resolver.dependency()) {
-                        r.addDependency(depend);
-                    }
-                }
+                loader(r, resolver);
+            }
+        }
+    }
+
+    private void loader(LibraryResolver lr, Resolver resolver) throws Exception {
+        if (resolver.isReferenceLoad()) {
+            for (String depend : resolver.dependency()) {
+                lr.addDependency(depend, resolver.plugin);
+            }
+        } else {
+            for (String depend : resolver.dependency()) {
+                lr.addDependency(depend, new Plugin(LibraryResolver.class, resolver.plugin.name)); // Need to know who loaded this jar file, not all thrown to MavenLoader
             }
         }
     }
@@ -130,19 +134,18 @@ public class Loader {
         }
     }
 
-    @Nullable
-    private Class<?> getPluginClass(@NotNull JarFile file) {
+    private Loader.@Nullable Plugin getPluginClass(@NotNull JarFile file) {
         Platform p = Platform.get();
         return switch (p) {
-            case Velocity -> getVelocityClass(file);
-            case Folia, Spigot, ShreddedPaper -> getBukkitClass(file);
-            case Paper -> getPaperClass(file);
-            case BungeeCord -> getBungeeClass(file);
+            case Velocity -> getVelocityPluginInfo(file);
+            case Folia, Spigot, ShreddedPaper -> getBukkitPluginInfo(file);
+            case Paper -> getPaperPluginInfo(file);
+            case BungeeCord -> getBungeePluginInfo(file);
         };
     }
 
     @Nullable
-    private Class<?> getVelocityClass(@NotNull JarFile file) {
+    private Loader.@Nullable Plugin getVelocityPluginInfo(@NotNull JarFile file) {
         ZipEntry entry = file.getEntry("velocity-plugin.json");
         if (entry != null && !entry.isDirectory()) {
             try (var inputStream = file.getInputStream(entry)) {
@@ -150,7 +153,7 @@ public class Loader {
                 try (var reader = new InputStreamReader(inputStream)) {
                     VelocityPlugin vc = gson.fromJson(reader, VelocityPlugin.class);
                     if (vc == null) return null;
-                    return vc.getMainClass();
+                    return new Plugin(vc.getMainClass(), vc.getName());
                 } catch (Exception e) {
                     e.printStackTrace();
                     return null;
@@ -163,21 +166,19 @@ public class Loader {
         return null;
     }
 
-    @Nullable
-    private Class<?> getYmlClass(@NotNull JarFile file, @NotNull String name) {
+    private Loader.@Nullable Plugin getYmlPluginInfo(@NotNull JarFile file, @NotNull String name) {
         ZipEntry entry = file.getEntry(name);
         if (entry != null && !entry.isDirectory()) {
-            return getYmlClass(file, entry);
+            return getYmlPluginInfo(file, entry);
         }
         return null;
     }
 
-    @Nullable
-    private Class<?> getYmlClass(@NotNull JarFile file, @NotNull ZipEntry entry) {
+    private Loader.@Nullable Plugin getYmlPluginInfo(@NotNull JarFile file, @NotNull ZipEntry entry) {
         try (var inputStream = file.getInputStream(entry)) {
             YamlConfiguration c = YamlConfiguration.loadConfiguration(inputStream);
             try {
-                return Class.forName(c.getString("main"));
+                return new Plugin(Class.forName(c.getString("main")), c.getString("name"));
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
                 return null;
@@ -188,26 +189,25 @@ public class Loader {
         }
     }
 
-    @Nullable
-    private Class<?> getPaperClass(@NotNull JarFile file) {
+    private Loader.@Nullable Plugin getPaperPluginInfo(@NotNull JarFile file) {
         ZipEntry entry = file.getEntry("paper-plugin.yml");
         if (entry != null && !entry.isDirectory()) {
-            return getYmlClass(file, entry);
+            return getYmlPluginInfo(file, entry);
         }
-        return getBukkitClass(file);
+        return getBukkitPluginInfo(file);
     }
 
-    @Nullable
-    private Class<?> getBukkitClass(@NotNull JarFile file) {
-        return getYmlClass(file, "plugin.yml");
+    private Loader.@Nullable Plugin getBukkitPluginInfo(@NotNull JarFile file) {
+        return getYmlPluginInfo(file, "plugin.yml");
     }
 
-    @Nullable
-    private Class<?> getBungeeClass(@NotNull JarFile file) {
-        return getYmlClass(file, "bungee.yml");
+    private Loader.@Nullable Plugin getBungeePluginInfo(@NotNull JarFile file) {
+        return getYmlPluginInfo(file, "bungee.yml");
     }
 
     private record Resolver(List<String> repository, List<String> dependency, boolean isReferenceLoad,
-                            Class<?> pluginClass) {
+                            Plugin plugin) {
     }
+
+    public record Plugin(Class<?> main, String name) {}
 }

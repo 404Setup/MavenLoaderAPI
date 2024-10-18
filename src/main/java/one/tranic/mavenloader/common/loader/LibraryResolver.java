@@ -43,6 +43,7 @@ import java.util.List;
 public class LibraryResolver {
 
     private static final Logger logger = LoggerFactory.getLogger("LibraryResolver");
+    private final Loader.@NotNull Plugin internalPlugin = new Loader.Plugin(this.getClass(), "MavenLoaderAPI");
     private static boolean enabled;
 
     static {
@@ -145,10 +146,10 @@ public class LibraryResolver {
      * Adds a Maven dependency to be resolved and downloaded.
      *
      * @param dependency the Maven dependency to resolve, not be {@code null}.
-     * @param clazz the target plugin class, not be {@code null}.
+     * @param plugin the target plugin, not be {@code null}.
      * @throws Exception if the dependency resolution fails
      */
-    public void addDependency(@NotNull Dependency dependency, @NotNull Class<?> clazz) throws Exception {
+    public void addDependency(@NotNull Dependency dependency, Loader.@NotNull Plugin plugin) throws Exception {
         CollectRequest collectRequest = new CollectRequest();
         collectRequest.setRepositories(repositories);
         collectRequest.addDependency(dependency);
@@ -162,7 +163,7 @@ public class LibraryResolver {
         for (ArtifactResult artifactResult : results) {
             File jarFile = artifactResult.getArtifact().getFile();
             if (jarFile != null && jarFile.exists()) {
-                loadJar(jarFile, clazz);
+                loadJar(jarFile, plugin);
             }
         }
     }
@@ -182,12 +183,12 @@ public class LibraryResolver {
      * Adds a Maven dependency to be resolved and downloaded.
      *
      * @param dep the Maven dependency to resolve, not be {@code null}.
-     * @param clazz the target plugin class, not be {@code null}.
+     * @param plugin the target plugin, not be {@code null}.
      * @throws Exception if the dependency resolution fails
      */
-    public void addDependency(@NotNull String dep, @NotNull Class<?> clazz) throws Exception {
+    public void addDependency(@NotNull String dep, Loader.@NotNull Plugin plugin) throws Exception {
         Dependency dependency = new Dependency(new DefaultArtifact(dep), null);
-        addDependency(dependency, clazz);
+        addDependency(dependency, plugin);
     }
 
     /**
@@ -209,7 +210,7 @@ public class LibraryResolver {
      * @throws Exception if any error occurs during loading
      */
     private void loadJar(File jarFile) throws Exception {
-        loadJar(jarFile, this.getClass());
+        loadJar(jarFile, internalPlugin);
     }
 
     /**
@@ -219,19 +220,19 @@ public class LibraryResolver {
      * @param plugin  Plugin class
      * @throws Exception if any error occurs during loading
      */
-    private void loadJar(File jarFile, Class<?> plugin) throws Exception {
+    private void loadJar(File jarFile, Loader.@NotNull Plugin plugin) throws Exception {
         if (!jarFile.exists()) throw new FileNotFoundException();
         if (!enabled) return;
         URL jarUrl = jarFile.toURI().toURL();
 
-        ClassLoader pluginClassLoader = plugin.getClassLoader();
+        ClassLoader pluginClassLoader = plugin.main().getClassLoader();
 
         Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
         method.setAccessible(true);
 
         if (pluginClassLoader instanceof URLClassLoader) {
             method.invoke(pluginClassLoader, jarUrl);
-            logger.info("Loaded JAR into plugin " + plugin.getName() + ":" + jarFile.getAbsolutePath());
+            logger.info("Loaded JAR into plugin " + plugin.name() + ":" + jarFile.getAbsolutePath());
         } else {
             logger.error("ClassLoader is not an instance of URLClassLoader");
         }
