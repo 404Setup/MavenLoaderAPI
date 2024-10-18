@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public final class MavenLoader extends Plugin {
-    private final Logger logger = LoggerFactory.getLogger("MavenLoaderAPI");
+    private final Logger logger = LoggerFactory.getLogger("MavenLoaderAPI-Bungee");
     private Metrics metrics;
 
     public MavenLoader() {
@@ -19,7 +19,7 @@ public final class MavenLoader extends Plugin {
 
     @Override
     public void onEnable() {
-        logger.info("Initializing MavenLoaderAPI (BungeeCord)");
+        logger.info("Initializing MavenLoaderAPI");
         metrics = new Metrics(this, 23524);
         MessageSender.setPlugin(this);
         new MavenLoaderUpdater(getDescription().getVersion(), getProxy().getConsole(), Loaders.BUNGEECORD).checkUpdate();
@@ -27,7 +27,7 @@ public final class MavenLoader extends Plugin {
 
     @Override
     public void onDisable() {
-        logger.info("Shutting down MavenLoaderAPI (BungeeCord)");
+        logger.info("Shutting down MavenLoaderAPI");
         if (metrics != null) {
             metrics.shutdown();
         }

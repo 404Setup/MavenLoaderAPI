@@ -22,7 +22,7 @@ import java.util.concurrent.*;
 public class Boost {
 
     private static final Map<String, String> mirrors = new HashMap<>();
-    private static final Logger logger = LoggerFactory.getLogger("MavenLibraryResolver");
+    private static final Logger logger = LoggerFactory.getLogger("LibraryResolver");
     private static final String central = "https://repo.maven.apache.org/maven2";
     private static final String central2 = "https://repo1.maven.org/maven2";
     private static final URI centralUri = URI.create(central);

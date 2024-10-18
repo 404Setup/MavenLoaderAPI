@@ -158,4 +158,15 @@ public enum Platform {
             case Folia -> "folia";
         };
     }
+
+    public String toRawString() {
+        return switch (this) {
+            case Velocity -> "Velocity";
+            case BungeeCord -> "BungeeCord";
+            case Spigot -> "Spigot";
+            case Paper -> "Paper";
+            case ShreddedPaper -> "ShreddedPaper";
+            case Folia -> "Folia";
+        };
+    }
 }

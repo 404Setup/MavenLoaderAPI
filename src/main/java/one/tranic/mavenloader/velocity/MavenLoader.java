@@ -11,6 +11,7 @@ import one.tranic.mavenloader.common.MavenLoaderUpdater;
 import one.tranic.mavenloader.common.loader.Loader;
 import one.tranic.mavenloader.common.updater.modrinth.source.Loaders;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
 
@@ -23,15 +24,14 @@ import java.nio.file.Path;
         authors = {"404"}
 )
 public class MavenLoader {
-    private final Logger logger;
+    private final Logger logger = LoggerFactory.getLogger("MavenLoaderAPI-Velocity");
     private final Metrics.Factory metricsFactory;
     private final @DataDirectory Path dataDirectory;
     private final ProxyServer proxy;
     private Metrics metrics;
 
     @Inject
-    public MavenLoader(Logger logger, ProxyServer proxy, Metrics.Factory metricsFactory, @DataDirectory Path dataDirectory) {
-        this.logger = logger;
+    public MavenLoader(ProxyServer proxy, Metrics.Factory metricsFactory, @DataDirectory Path dataDirectory) {
         this.metricsFactory = metricsFactory;
         this.dataDirectory = dataDirectory;
         this.proxy = proxy;
@@ -40,14 +40,14 @@ public class MavenLoader {
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
-        logger.info("Initializing MavenLoaderAPI (Velocity)");
+        logger.info("Initializing MavenLoaderAPI");
         metrics = metricsFactory.make(this, 23396);
         new MavenLoaderUpdater(BuildConstants.VERSION, proxy.getConsoleCommandSource(), Loaders.VELOCITY).checkUpdate();
     }
 
     @Subscribe
     public void onProxyShutdown(ProxyShutdownEvent event) {
-        logger.info("Shutting down MavenLoaderAPI (Velocity)");
+        logger.info("Shutting down MavenLoaderAPI");
         if (metrics != null) {
             metrics.shutdown();
         }

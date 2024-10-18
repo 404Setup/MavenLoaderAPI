@@ -10,13 +10,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public final class MavenLoader extends JavaPlugin {
-    private final Logger logger = LoggerFactory.getLogger("MavenLoaderAPI");
+    private final Logger logger = LoggerFactory.getLogger("MavenLoaderAPI-"+Platform.get().toRawString());
     private Metrics metrics;
 
     @Override
     public void onEnable() {
         Loader.MainLoader(getDataFolder().toPath(), logger);
-        logger.info("Initializing MavenLoaderAPI (Spigot)");
+        logger.info("Initializing MavenLoaderAPI");
         metrics = new Metrics(this, 23501);
         MessageSender.setPlugin(this);
         new MavenLoaderUpdater(getDescription().getVersion(), getServer().getConsoleSender(), Loaders.of(Platform.get().toString())).checkUpdate();
@@ -24,7 +24,7 @@ public final class MavenLoader extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        logger.info("Shutting down MavenLoaderAPI (Spigot)");
+        logger.info("Shutting down MavenLoaderAPI");
         if (metrics != null) {
             metrics.shutdown();
         }
