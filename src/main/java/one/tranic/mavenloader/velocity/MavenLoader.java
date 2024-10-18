@@ -24,7 +24,14 @@ import org.slf4j.Logger;
 
 import java.nio.file.Path;
 
-@Plugin(id = "maven-loader", name = "MavenLoader", version = BuildConstants.VERSION, url = "https://tranic.one", authors = {"404"})
+@Plugin(
+        id = "maven-loader",
+        name = "MavenLoader",
+        version = BuildConstants.VERSION,
+        description = "A custom external dependency loader is prepared to easily reduce the package size.",
+        url = "https://tranic.one",
+        authors = {"404"}
+)
 public class MavenLoader {
     private static Updater updater;
     private final Logger logger;

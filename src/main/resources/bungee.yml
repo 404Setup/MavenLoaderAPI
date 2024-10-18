@@ -2,3 +2,4 @@ name: MavenLoader
 version: '${version}'
 main: one.tranic.mavenloader.bungee.MavenLoader
 author: 404
+description: A custom external dependency loader is prepared to easily reduce the package size.

@@ -4,5 +4,6 @@ main: one.tranic.mavenloader.spigot.MavenLoader
 api-version: '1.18.2'
 load: STARTUP
 authors: [ "404" ]
+description: A custom external dependency loader is prepared to easily reduce the package size.
 folia-supported: true
 website: https://tranic.one
