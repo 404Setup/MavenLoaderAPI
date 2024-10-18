@@ -17,6 +17,7 @@ import one.tranic.mavenloader.common.updater.spiget.SpigetUpdate;
 import one.tranic.mavenloader.common.updater.spigot.SpigotUpdate;
 
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 
 public class UpdateUtils {
     private static Updater updater;
@@ -38,28 +39,30 @@ public class UpdateUtils {
             default ->
                     throw new RuntimeException("This updater channel: " + Config.getUpdaterSource() + " is not supported");
         };
-        try {
-            UpdateRecord result = updater.getUpdate();
-            if (result != null) {
-                if (result.hasUpdate()) {
-                    CommandSender source = server.getConsole();
-                    MessageSender.sendMessage(Component.text("We found a MavenLoaderAPI updater!", NamedTextColor.BLUE), source);
-                    MessageSender.sendMessage(Component.text("This machine Mavenloader version ", NamedTextColor.YELLOW)
-                                    .append(Component.text(version, NamedTextColor.AQUA))
-                                    .append(Component.text(", available updated version ", NamedTextColor.YELLOW))
-                                    .append(Component.text(result.newVersion(), NamedTextColor.AQUA))
-                            , source
-                    );
-                    MessageSender.sendMessage(Component.text("Update information: ", NamedTextColor.YELLOW), source);
-                    MessageSender.sendMessage(Component.text(result.updateInfo()), source);
-                    MessageSender.sendMessage(Component.text("Download and updater here: ", NamedTextColor.YELLOW)
-                            .append(Component.text(result.updateUrl(), NamedTextColor.AQUA)), source);
-                } else {
-                    MessageSender.sendMessage(Component.text("MavenloaderAPI is already the latest version!", NamedTextColor.GREEN), server.getConsole());
+        CompletableFuture.runAsync(() -> {
+            try {
+                UpdateRecord result = updater.getUpdate();
+                if (result != null) {
+                    if (result.hasUpdate()) {
+                        CommandSender source = server.getConsole();
+                        MessageSender.sendMessage(Component.text("We found a MavenLoaderAPI updater!", NamedTextColor.BLUE), source);
+                        MessageSender.sendMessage(Component.text("This machine Mavenloader version ", NamedTextColor.YELLOW)
+                                        .append(Component.text(version, NamedTextColor.AQUA))
+                                        .append(Component.text(", available updated version ", NamedTextColor.YELLOW))
+                                        .append(Component.text(result.newVersion(), NamedTextColor.AQUA))
+                                , source
+                        );
+                        MessageSender.sendMessage(Component.text("Update information: ", NamedTextColor.YELLOW), source);
+                        MessageSender.sendMessage(Component.text(result.updateInfo()), source);
+                        MessageSender.sendMessage(Component.text("Download and updater here: ", NamedTextColor.YELLOW)
+                                .append(Component.text(result.updateUrl(), NamedTextColor.AQUA)), source);
+                    } else {
+                        MessageSender.sendMessage(Component.text("MavenloaderAPI is already the latest version!", NamedTextColor.GREEN), server.getConsole());
+                    }
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        });
     }
 }
