@@ -64,7 +64,7 @@ public class MessageSender {
             case Spigot ->
                     MessageSender.bukkitAdventure().sender((org.bukkit.command.CommandSender) sender).sendMessage(message);
             case Paper, Folia, ShreddedPaper ->
-                    ((org.bukkit.command.CommandSender) sender).sendMessage(LegacyComponentSerializer.legacySection().serialize(message));
+                    ((org.bukkit.command.CommandSender) sender).sendMessage(message);
             case Velocity -> ((com.velocitypowered.api.command.CommandSource) sender).sendMessage(message);
         }
     }
