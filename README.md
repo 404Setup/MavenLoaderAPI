@@ -17,7 +17,7 @@ A custom external dependency loader is prepared to easily reduce the package siz
 - Java 17+
 - Velocity 3.3.0 ↔ latest (Optional)
 - BungeeCord 1.18 ↔ latest (Optional)
-- Spigot/Paper/Folia 1.18.2 ↔ latest (Optional)
+- Paper/Folia 1.18.2 ↔ latest (Optional)
 
 ## Plugin Compatibility
 - PlugManX (1.6-SNAPSHOT will not be provided, and it may be provided in future updates.)
@@ -28,7 +28,6 @@ Versions starting from 1.18.2 should work fine.
 if you have problems, please open an issues and give me the log and your environment information.
 
 - Java 23 (Specified as 21 in Spigot and BungeeCord)
-- Spigot 1.21 latest
 - Folia 1.21.1 latest
 - ShreddedPaper 1.20.6 latest
 - BungeeCord 1.21 a89cf5f:1869
@@ -68,7 +67,7 @@ Example in: [MavenLoader-Example](https://github.com/LevelTranic/MavenLoader-Exa
 - 1.2-SNAPSHOT: Implementing `maven.yml`
 - 1.4-SNAPSHOT: Implementing repository whitelist
 - 1.5-SNAPSHOT: Support Bukkit
-- 1.6-SNAPSHOT (Coming soon): Support BungeeCord. `maven.yml` support `platform`, `reference-load` keyword. Remove external API (now only allow maven.yml)
+- 1.6-SNAPSHOT (Coming soon): Support BungeeCord. Removed Spigot compatibility. `maven.yml` support `platform`, `reference-load` keyword. Remove external API (now only allow maven.yml)
 
 ## Config
 ```yaml
@@ -94,5 +93,5 @@ updater:
 
 ## Statistics
 - Velocity: https://bstats.org/plugin/velocity/MavenLoader/23396
-- Spigot: https://bstats.org/plugin/bukkit/MavenLoader-Spigot/23501
+- Paper: https://bstats.org/plugin/bukkit/MavenLoader-Spigot/23501
 - Bungee: https://bstats.org/plugin/bungeecord/MavenLoader-Bungee/23524

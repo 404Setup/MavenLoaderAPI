@@ -1,4 +1,4 @@
-package one.tranic.mavenloader.spigot;
+package one.tranic.mavenloader.paper;
 
 import one.tranic.mavenloader.Platform;
 import one.tranic.mavenloader.common.MavenLoaderUpdater;
@@ -15,6 +15,8 @@ public final class MavenLoader extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        if (Platform.get() == Platform.Spigot)
+            throw new RuntimeException("MavenLoaderAPI no longer provides Spigot compatibility, it brings too much trouble.");
         Loader.MainLoader(getDataFolder().toPath(), logger);
         logger.info("Initializing MavenLoaderAPI");
         metrics = new Metrics(this, 23501);

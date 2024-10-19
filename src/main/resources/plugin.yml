@@ -1,6 +1,6 @@
 name: MavenLoader
 version: '${version}'
-main: one.tranic.mavenloader.spigot.MavenLoader
+main: one.tranic.mavenloader.paper.MavenLoader
 api-version: '1.18.2'
 load: STARTUP
 authors: [ "404" ]
