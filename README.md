@@ -1,6 +1,8 @@
 # MavenLoader
 A custom external dependency loader is prepared to easily reduce the package size.
 
+I consider it just an experimental project and not a good solution, so you should not use it, and my subsequent works will not use MavenLoaderAPI as a dependency.
+
 <div align=center>
 <img src="https://badges.moddingx.org/modrinth/downloads/mavenloader-api" alt="">
 <img src="https://badges.moddingx.org/modrinth/versions/mavenloader-api" alt="">
@@ -18,9 +20,6 @@ A custom external dependency loader is prepared to easily reduce the package siz
 - Velocity 3.3.0 ↔ latest (Optional)
 - BungeeCord 1.18 ↔ latest (Optional)
 - Paper/Folia 1.18.2 ↔ latest (Optional)
-
-## Plugin Compatibility
-- PlugManX (1.6-SNAPSHOT will not be provided, and it may be provided in future updates.)
 
 ## Test Information
 Versions starting from 1.18.2 should work fine.
@@ -63,12 +62,6 @@ Updater API in: [USE_UPDATER](USE_UPDATER.md)
 
 Example in: [MavenLoader-Example](https://github.com/LevelTranic/MavenLoader-Example)
 
-## Compatibility
-- 1.2-SNAPSHOT: Implementing `maven.yml`
-- 1.4-SNAPSHOT: Implementing repository whitelist
-- 1.5-SNAPSHOT: Support Bukkit
-- 1.6-SNAPSHOT (Coming soon): Support BungeeCord. Removed Spigot compatibility. `maven.yml` support `platform`, `reference-load` keyword. Remove external API (now only allow maven.yml)
-
 ## Config
 ```yaml
 enable_whitelist: true # Enable repository whitelist, default is true
@@ -85,10 +78,7 @@ whitelist:
   - https://hub.spigotmc.org/nexus/content/repositories/snapshots/
   - https://repo.papermc.io/repository/maven-public/
   - https://repo.repsy.io/mvn/rdb/default
-updater:
-  check: true
-  source: github # Update Channel, Support: github, spigot, spiget, modrinth, hangar
-  simple-mode: true # Sacrifice some detection accuracy in exchange for some performance. (default: true)
+update_check: true
 ```
 
 ## Statistics
