@@ -58,8 +58,6 @@ Then download MavenLoader and put it in the Server plugin directory. It is recom
 ### Developer
 Docs in: [DEVELOPER_DOCS](DEVELOPER_DOCS.md)
 
-Updater API in: [USE_UPDATER](USE_UPDATER.md)
-
 Example in: [MavenLoader-Example](https://github.com/LevelTranic/MavenLoader-Example)
 
 ## Config
