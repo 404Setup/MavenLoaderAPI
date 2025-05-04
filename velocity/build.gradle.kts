@@ -19,8 +19,8 @@ dependencies {
     compileOnly("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
     annotationProcessor("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
 
-    implementation("one.tranic:t-base:1.2.7")
-    implementation("one.tranic:t-velocity:1.0.1")
+    implementation("one.tranic:t-base:1.2.8")
+    implementation("one.tranic:t-velocity:1.0.2")
 }
 
 tasks.build {

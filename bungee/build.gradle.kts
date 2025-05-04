@@ -14,11 +14,11 @@ dependencies {
     compileOnly("net.md-5:bungeecord-api:1.18-R0.1-SNAPSHOT")
 
     implementation("net.kyori:adventure-platform-bungeecord:4.3.4")
-    implementation("net.kyori:adventure-text-minimessage:4.17.0")
+    implementation("net.kyori:adventure-text-minimessage:4.21.0")
 
-    implementation("one.tranic:t-base:1.2.7")
-    implementation("one.tranic:t-bungee:1.0.1")
-    implementation("one.tranic:t-utils:1.2.2.1")
+    implementation("one.tranic:t-base:1.2.8")
+    implementation("one.tranic:t-bungee:1.0.2")
+    implementation("one.tranic:t-utils:1.2.3")
 
     compileOnly("org.slf4j:slf4j-api:2.0.17")
 }
