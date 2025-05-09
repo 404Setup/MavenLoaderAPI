@@ -2,7 +2,7 @@ package one.tranic.mavenloader.loader;
 
 import com.google.gson.Gson;
 import one.tranic.mavenloader.Config;
-import one.tranic.t.utils.Platform;
+import one.tranic.t.utils.minecraft.Platform;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.simpleyaml.configuration.file.YamlConfiguration;
@@ -138,6 +138,7 @@ public class Loader {
             case Spigot -> getBukkitPluginInfo(file);
             case Folia, Paper, ShreddedPaper -> getPaperPluginInfo(file);
             case BungeeCord -> getBungeePluginInfo(file);
+            default -> throw new IllegalStateException("Unexpected value: " + p);
         };
     }
 

@@ -22,7 +22,7 @@ dependencies {
         exclude("org.spigotmc", "spigot-api")
     }
     implementation("one.tranic:t-paper:1.0.3")
-    implementation("one.tranic:t-utils:1.2.3")
+    implementation("one.tranic:t-utils:1.3.0")
 }
 
 val libPackage = "one.tranic.mavenloader.libs"

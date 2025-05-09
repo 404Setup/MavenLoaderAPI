@@ -10,5 +10,5 @@ dependencies {
     implementation("org.apache.maven.resolver:maven-resolver-connector-basic:1.9.22")
     implementation("org.apache.maven.resolver:maven-resolver-transport-http:1.9.22")
 
-    implementation("one.tranic:t-utils:1.2.3")
+    implementation("one.tranic:t-utils:1.3.0")
 }

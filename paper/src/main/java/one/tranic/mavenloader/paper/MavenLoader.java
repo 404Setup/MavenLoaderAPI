@@ -6,7 +6,7 @@ import one.tranic.t.base.TBase;
 import one.tranic.t.base.updater.SpigotVersionFetcher;
 import one.tranic.t.base.updater.VersionFetcher;
 import one.tranic.t.paper.TPaper;
-import one.tranic.t.utils.Platform;
+import one.tranic.t.utils.minecraft.Platform;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
